@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WanAndroidWithKotlin</string>
+    <string name="network_unavailable_tip">Network connection is not available! Please check the network setting!</string>
+</resources>
