@@ -10,8 +10,10 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.lh.wanandroid.R
+import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.event.NetworkChangeEvent
 import com.lh.wanandroid.receiver.NetworkChangeReceiver
+import com.lh.wanandroid.utils.Preference
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -22,11 +24,16 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class BaseActivity: AppCompatActivity() {
 
+
+    protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
+
+    /** 提示View **/
     private lateinit var mLayoutParams: WindowManager.LayoutParams
     private lateinit var mWindowManager: WindowManager
     private lateinit var mTipView: View
+
     /** 网络状态变化的广播 **/
-    private lateinit var mNetworkChangeReceiver: NetworkChangeReceiver
+    private var mNetworkChangeReceiver: NetworkChangeReceiver? = null
 
     /** 布局文件id **/
     protected abstract fun attachLayoutRes(): Int
@@ -45,6 +52,7 @@ abstract class BaseActivity: AppCompatActivity() {
 
     /** 是否需要显示TipView **/
     open fun enableNetworkTip(): Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         /** 输入框不希望遮挡设置activity属性 **/
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -70,6 +78,27 @@ abstract class BaseActivity: AppCompatActivity() {
         super.onResume()
     }
 
+    override fun onPause() {
+        if (mNetworkChangeReceiver != null){
+            unregisterReceiver(mNetworkChangeReceiver)
+            mNetworkChangeReceiver = null
+        }
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (userEventBus()){
+            EventBus.getDefault().unregister(this)
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        if (mTipView != null && mTipView.parent != null){
+            mWindowManager.removeView(mTipView)
+        }
+    }
     /** 初始化TipView **/
     private fun initTipView(){
         mTipView = layoutInflater.inflate(R.layout.layout_network_tip, null)
@@ -87,8 +116,10 @@ abstract class BaseActivity: AppCompatActivity() {
         mLayoutParams.windowAnimations = R.style.anim_float_view
     }
 
+    /** EventBus监听网络变化时间 **/
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNetWorkChangeEvent(event: NetworkChangeEvent){
+        hasNetwork = event.isConnected
         checkNetwork(event.isConnected)
     }
 
