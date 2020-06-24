@@ -75,9 +75,11 @@ class CircleImageView(context: Context, attrs: AttributeSet?) :
 
             if (mShader == null || rawBitmap != mRawBitmap){
                 mRawBitmap = rawBitmap
+                //创建着色器，x、y方向都设置为用边缘色彩填充多余空间
                 mShader = BitmapShader(mRawBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
             }
 
+            //用于缩放BitmapShader
             if (mShader != null){
                 mMatrix.setScale((dstWidth - doubleBorderWidth) /  rawBitmap.width, (dstHeight - doubleBorderWidth) / rawBitmap.height)
                 mShader!!.setLocalMatrix(mMatrix)
@@ -107,6 +109,7 @@ class CircleImageView(context: Context, attrs: AttributeSet?) :
             super.onDraw(canvas)
         }
     }
+
     private fun dip2px(dipVal: Int): Int{
         val scale = resources.displayMetrics.density
         return (dipVal * scale + 0.5f).toInt()
