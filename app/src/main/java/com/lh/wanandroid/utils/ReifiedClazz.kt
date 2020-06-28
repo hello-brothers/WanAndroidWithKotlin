@@ -8,6 +8,7 @@ import android.content.Intent
  *CreateDate: 2020/6/24
  */
 
+/** activity跳转 **/
 inline fun <reified T> cStartActivity(context: Context){
     cStartActivityWithData<T>(context){}
 }

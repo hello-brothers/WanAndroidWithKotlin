@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_36"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:clickable="true"
+    android:focusable="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    >
+
+    <ImageView
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:src="@drawable/ic_rank_white_24dp"
+        android:layout_gravity="end"
+        />
+    <com.lh.wanandroid.widget.CircleImageView
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:src="@mipmap/ic_default_avatar"
+        app:type="circle"
+        android:layout_gravity="center_horizontal"
+        />
+
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_login"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/White"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        />
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_grade"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/Grey100"
+            />
+        <TextView
+            android:id="@+id/tvUserGrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/Grey100"
+            android:text="@string/nav_line_2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_rank"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/Grey100"
+            android:layout_marginStart="@dimen/dp_8"
+            />
+        <TextView
+            android:id="@+id/tvUserRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/Grey100"
+            android:text="@string/nav_line_2"
+            />
+    </LinearLayout>
+</LinearLayout>

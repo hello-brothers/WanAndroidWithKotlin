@@ -10,10 +10,12 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.lh.wanandroid.R
+import com.lh.wanandroid.app.App
 import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.event.NetworkChangeEvent
 import com.lh.wanandroid.receiver.NetworkChangeReceiver
 import com.lh.wanandroid.utils.Preference
+import com.lh.wanandroid.utils.StatusBarUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -25,6 +27,8 @@ import org.greenrobot.eventbus.ThreadMode
 abstract class BaseActivity: AppCompatActivity() {
 
 
+    /** 主题色 **/
+    private val mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
     protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
 
     /** 提示View **/
@@ -76,6 +80,7 @@ abstract class BaseActivity: AppCompatActivity() {
         mNetworkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(mNetworkChangeReceiver, filter)
         super.onResume()
+        initColor()
     }
 
     override fun onPause() {
@@ -98,6 +103,11 @@ abstract class BaseActivity: AppCompatActivity() {
         if (mTipView != null && mTipView.parent != null){
             mWindowManager.removeView(mTipView)
         }
+    }
+
+    /** 关于颜色方面的初始化 **/
+    open fun initColor(){
+        StatusBarUtil.setColor(this, mThemeColor, 0)
     }
     /** 初始化TipView **/
     private fun initTipView(){
