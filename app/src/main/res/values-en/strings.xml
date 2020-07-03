@@ -16,4 +16,10 @@
     <string name="nav_night_mode">Night Mode</string>
     <string name="nav_setting">Setting</string>
     <string name="nav_logout">Logout</string>
+
+    <string name="home">Home</string>
+    <string name="square">Square</string>
+    <string name="wechat">WeChar</string>
+    <string name="knowledge_system">System</string>
+    <string name="project">Project</string>
 </resources>

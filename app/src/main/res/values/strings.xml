@@ -16,4 +16,11 @@
     <string name="nav_night_mode">夜间模式</string>
     <string name="nav_setting">系统设置</string>
     <string name="nav_logout">退出登录</string>
+
+    <!--    MainActivity底部导航-->
+    <string name="home">首页</string>
+    <string name="square">广场</string>
+    <string name="wechat">公众号</string>
+    <string name="knowledge_system">体系</string>
+    <string name="project">项目</string>
 </resources>

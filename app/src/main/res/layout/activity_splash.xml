@@ -10,6 +10,7 @@
     tools:context=".ui.activity.SplashActivity">
 
     <com.lh.wanandroid.widget.CircleImageView
+        android:id="@+id/circleView"
         android:layout_width="@dimen/dp_110"
         android:layout_height="@dimen/dp_110"
         app:borderColor="@color/White"

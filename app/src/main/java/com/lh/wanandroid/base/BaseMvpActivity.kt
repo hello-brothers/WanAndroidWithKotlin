@@ -7,7 +7,7 @@ import com.lh.wanandroid.base.mvp.IView
  *@author: lh
  *CreateDate: 2020/6/28
  */
-abstract class BaseMvpActivity<in V: IView, P: IPresenter<V>>: BaseActivity(), IView {
+abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity(), IView {
 
     protected var mPresenter: P? = null
 
