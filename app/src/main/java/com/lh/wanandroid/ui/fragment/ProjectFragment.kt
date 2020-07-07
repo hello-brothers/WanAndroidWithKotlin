@@ -1,5 +1,6 @@
 package com.lh.wanandroid.ui.fragment
 
+import android.view.View
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseMvpFragment
 import com.lh.wanandroid.mvp.contract.ProjectContract
@@ -19,6 +20,10 @@ class ProjectFragment: BaseMvpFragment<ProjectContract.View, ProjectContract.Pre
     override fun attachLayoutRes() = R.layout.fragment_project
 
     override fun lazyLoad() {
+
+    }
+
+    override fun initChildView(view: View) {
 
     }
 }

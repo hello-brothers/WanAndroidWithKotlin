@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <item name="emptyView" type="id"/>
+    <item name="errorView" type="id"/>
+    <item name="loadingView" type="id"/>
+    <item name="noNetworkView" type="id"/>
+
+</resources>

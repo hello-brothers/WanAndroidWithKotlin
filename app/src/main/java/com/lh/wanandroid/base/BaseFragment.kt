@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.lh.multiple.MultipleStatusView
 import com.lh.wanandroid.event.NetworkChangeEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -22,6 +23,8 @@ abstract class BaseFragment: Fragment() {
     /** 数据是否加载过了 **/
     private var hasLoadData = false
 
+    /** 多种状态的View切换 **/
+    protected var mLayoutStatusView: MultipleStatusView? = null
 
 
 

@@ -61,5 +61,6 @@ dependencies {
 
     //retrofit
     implementation rootProject.ext.retrofitLibs
+    implementation project(path: ':multiple-status-view')
 
 }
