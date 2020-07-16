@@ -23,4 +23,9 @@
     <string name="wechat">公众号</string>
     <string name="knowledge_system">体系</string>
     <string name="project">项目</string>
+
+
+    <!--    home-->
+    <string name="top_tip">顶置</string>
+    <string name="article_fresh">新</string>
 </resources>

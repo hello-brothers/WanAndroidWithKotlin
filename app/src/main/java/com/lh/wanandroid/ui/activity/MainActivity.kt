@@ -1,13 +1,10 @@
 package com.lh.wanandroid.ui.activity
 
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lh.wanandroid.R
-import com.lh.wanandroid.base.BaseActivity
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
 import com.lh.wanandroid.mvp.contract.MainContract
@@ -118,7 +115,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
             FRAGMENT_HOME ->{
                 toolbar.title = getString(R.string.app_name)
                 if (mHomeFragment == null){
-                    mHomeFragment = HomeFragment.getInstance()
+                    mHomeFragment = HomeFragment.newInstance()
                     fragmentTransaction.add(R.id.flContainer, mHomeFragment!!, "home")
                 }else{
                     fragmentTransaction.show(mHomeFragment!!)

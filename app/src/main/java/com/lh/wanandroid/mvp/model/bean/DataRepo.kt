@@ -12,9 +12,9 @@ data class HttpResult<T>(
 ): BaseBean()
 
 //一页文章
-data class ArticleResponseBody<T>(
+data class ArticleResponseBody(
     val curPage: Int,
-    var datas: MutableList<T>,
+    var datas: MutableList<Article>,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
@@ -55,7 +55,8 @@ data class Article(
     val type: Int,
     val userId: Int,
     val visible: Int,
-    val zan: Int
+    val zan: Int,
+    val top: String
 )
 
 data class Tag(

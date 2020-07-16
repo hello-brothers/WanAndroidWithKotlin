@@ -33,6 +33,8 @@ ext{
     commonDeps = [
             "eventbus"          :   "org.greenrobot:eventbus:3.2.0",
             "multidex"              : 'com.android.support:multidex:1.0.3',
+            "brvh"                  : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+
 
     ]
 
