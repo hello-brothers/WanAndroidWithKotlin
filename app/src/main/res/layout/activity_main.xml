@@ -46,6 +46,7 @@
             style="@style/Widget.Design.BottomNavigationView"
             app:itemIconTint="@color/nav_item_color_state"
             app:itemTextColor="@color/nav_item_color_state"
+            android:visibility="invisible"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
