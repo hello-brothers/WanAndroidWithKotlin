@@ -3,43 +3,29 @@ package com.lh.wanandroid.ui.fragment
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.module.LoadMoreModule
-import com.lh.wanandroid.HomeAdapter
+import com.lh.wanandroid.adapter.HomeAdapter
 import com.lh.wanandroid.R
-import com.lh.wanandroid.base.BaseMvpFragment
+import com.lh.wanandroid.base.BaseMvpListFragment
 import com.lh.wanandroid.mvp.contract.HomeContract
 import com.lh.wanandroid.mvp.model.bean.Article
 import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
 import com.lh.wanandroid.mvp.model.bean.Banner
 import com.lh.wanandroid.mvp.presenter.HomePresenter
 import com.lh.wanandroid.utils.ImageLoader
-import com.lh.wanandroid.widget.SpaceItemDecoration
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_home_banner.view.*
+import kotlinx.android.synthetic.main.refresh_layout.*
 
 /**
  *@author: lh
  *CreateDate: 2020/7/3
  */
-class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View{
+class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View{
 
 
     companion object{
         fun newInstance(): HomeFragment = HomeFragment()
-    }
-
-    /** 是否为刷新状态 **/
-    private var isRefresh = true
-    private val datas = mutableListOf<Article>()
-
-    /** recyclerview适配器 **/
-    private val homeAdapter: HomeAdapter by lazy {
-        HomeAdapter(datas)
     }
 
     /** banner **/
@@ -47,10 +33,15 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
         layoutInflater.inflate(R.layout.item_home_banner, null)
     }
 
-    /** 首页ItemDecoration **/
-    private val spaceItemDecoration: SpaceItemDecoration by lazy {
-        SpaceItemDecoration()
+    /** recyclerview适配器 **/
+    private val homeAdapter: HomeAdapter by lazy {
+        HomeAdapter(datas)
     }
+
+    /** banner data **/
+    private lateinit var bannerDatas: ArrayList<Banner>
+
+    private val datas = mutableListOf<Article>()
 
     /** banner adapter **/
     private val bannerAdapter:BGABanner.Adapter<ImageView, String> by lazy {
@@ -60,16 +51,12 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
         }
     }
 
-    /** banner data **/
-    private lateinit var bannerDatas: ArrayList<Banner>
-
     /** banner lick callback **/
     private val bannerDelegate: BGABanner.Delegate<ImageView, String> by lazy {
         BGABanner.Delegate<ImageView, String>{banner, itemView, model, position ->
             if (bannerDatas.size > 0){
                 val data = bannerDatas[position]
             }
-
         }
     }
 
@@ -78,17 +65,15 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
     override fun attachLayoutRes(): Int  = R.layout.fragment_home
 
     override fun lazyLoad() {
+        mLayoutStatusView?.showLoading()
         mPresenter?.requestHomeData()
     }
 
     override fun initChildView(view: View) {
-        mLayoutStatusView = multiple_status_view
 
-        homeRecyclerView.run {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = homeAdapter
-            addItemDecoration(spaceItemDecoration)
-        }
+
+
+        recyclerView.adapter = homeAdapter
 
         bannerView.banner.run {
             setDelegate(bannerDelegate)
@@ -105,15 +90,11 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
             }
         }
 
-        swipeRefreshLayout.run {
-            setOnRefreshListener {
-                isRefresh =true
-                homeAdapter.loadMoreModule.isEnableLoadMore = false
-                mPresenter?.requestHomeData()
-            }
-        }
+    }
 
-
+    override fun onRefreshList() {
+        homeAdapter.loadMoreModule.isEnableLoadMore = false
+        mPresenter?.requestHomeData()
     }
 
     override fun setArticles(articles: ArticleResponseBody) {
@@ -129,6 +110,12 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
             homeAdapter.loadMoreModule.loadMoreEnd(isRefresh)
         else
             homeAdapter.loadMoreModule.loadMoreComplete()
+
+        if (homeAdapter.data.isEmpty())
+            mLayoutStatusView?.showEmpty()
+        else
+            mLayoutStatusView?.showContent()
+
     }
 
     @SuppressLint("CheckResult")
@@ -148,6 +135,15 @@ class HomeFragment: BaseMvpFragment<HomeContract.View, HomeContract.Presenter>()
             setAutoPlayAble(bannerFeedList.size > 1)
             setData(bannerFeedList, bannerTitleList)
             setAdapter(bannerAdapter)
+        }
+    }
+
+    override fun scrollToTop() {
+        recyclerView.run {
+            if (linearLayoutManager.findFirstVisibleItemPosition() > 20)
+                scrollToPosition(0)
+            else
+                smoothScrollToPosition(0)
         }
     }
 

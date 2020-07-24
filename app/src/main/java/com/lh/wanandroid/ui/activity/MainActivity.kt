@@ -1,5 +1,6 @@
 package com.lh.wanandroid.ui.activity
 
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
@@ -7,9 +8,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
+import com.lh.wanandroid.base.BaseMvpListFragment
 import com.lh.wanandroid.mvp.contract.MainContract
+import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
+import com.lh.wanandroid.utils.shortToast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(), MainContract.View{
@@ -45,8 +49,11 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         }
 
         showFragment(mIndex)
+
         initBottomNavigation()
         initDrawableLayout()
+        initFloatActionBtn()
+
     }
 
     override fun start() {
@@ -62,6 +69,13 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemReselectedListener)
     }
 
+    private fun initFloatActionBtn(){
+        floating_action_btn.setOnClickListener {
+            getCurrentFragmentByIndex(mIndex)?.let {
+                it.scrollToTop()
+            }
+        }
+    }
 
     private fun initDrawableLayout(){
         drawableLayout.run {
@@ -143,7 +157,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 toolbar.title = getString(R.string.knowledge_system)
                 if (mSystemFragment == null){
                     mSystemFragment = SystemFragment.getInstance()
-                    fragmentTransaction.add(R.id.flContainer, mSystemFragment!!, "wechat")
+                    fragmentTransaction.add(R.id.flContainer, mSystemFragment!!, "system")
                 }else{
                     fragmentTransaction.show(mSystemFragment!!)
                 }
@@ -153,7 +167,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 toolbar.title = getString(R.string.project)
                 if (mProjectFragment == null){
                     mProjectFragment = ProjectFragment.getInstance()
-                    fragmentTransaction.add(R.id.flContainer, mProjectFragment!!, "wechat")
+                    fragmentTransaction.add(R.id.flContainer, mProjectFragment!!, "project")
                 }else{
                     fragmentTransaction.show(mProjectFragment!!)
                 }
@@ -179,6 +193,30 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     }
 
 
+    private fun getCurrentFragmentByIndex(index: Int): IScrollToTop? {
+        return when(index){
+            FRAGMENT_HOME ->  mHomeFragment
+            FRAGMENT_PROJECT -> mProjectFragment
+            FRAGMENT_SYSTEM -> mSystemFragment
+            FRAGMENT_WECHAT -> mWechatFragment
+            FRAGMENT_SQUARE -> mSquareFragment
+            else -> null
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (mIndex != FRAGMENT_SQUARE)
+            menuInflater.inflate(R.menu.menu_activity_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.action_search -> getString(R.string.action_search).shortToast()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }
 

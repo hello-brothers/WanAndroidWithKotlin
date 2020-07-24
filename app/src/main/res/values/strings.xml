@@ -28,4 +28,8 @@
     <!--    home-->
     <string name="top_tip">顶置</string>
     <string name="article_fresh">新</string>
+
+    <!--    menu Action-->
+    <string name="action_search">搜索</string>
+    <string name="action_add">新增</string>
 </resources>

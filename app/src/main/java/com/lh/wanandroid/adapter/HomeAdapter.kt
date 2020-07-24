@@ -1,20 +1,20 @@
-package com.lh.wanandroid
+package com.lh.wanandroid.adapter
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.lh.wanandroid.mvp.contract.HomeContract
+import com.lh.wanandroid.R
 import com.lh.wanandroid.mvp.model.bean.Article
 
 /**
  *@author: lh
  *CreateDate: 2020/7/16
  */
-class HomeAdapter(articleList: MutableList<Article>): BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_home_list, articleList),
+class HomeAdapter(articleList: MutableList<Article>): BaseQuickAdapter<Article, BaseViewHolder>(
+    R.layout.item_home_list, articleList),
     LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: Article) {
 
@@ -58,7 +58,7 @@ class HomeAdapter(articleList: MutableList<Article>): BaseQuickAdapter<Article, 
         }
         holder.getView<TextView>(R.id.tvArticleTitle).text = tvTitleValue
         holder.getView<TextView>(R.id.tvArticleChapter).text = tvChapterValue
-        holder.getView<ImageView>(R.id.ivLike).setImageResource(if (isLiker)R.drawable.ic_like else R.drawable.ic_like_not)
+        holder.getView<ImageView>(R.id.ivLike).setImageResource(if (isLiker) R.drawable.ic_like else R.drawable.ic_like_not)
     }
 
 }

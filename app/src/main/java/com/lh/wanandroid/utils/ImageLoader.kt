@@ -21,8 +21,8 @@ object ImageLoader {
             iv?.apply {
                 Glide.with(context!!).clear(iv)
                 val options = RequestOptions
-                    .diskCacheStrategyOf(DiskCacheStrategy.DATA)
-                    .placeholder(R.drawable.bg_placeholder)
+                    .diskCacheStrategyOf(DiskCacheStrategy.DATA)//解码前将数据写入磁盘缓存
+                    .placeholder(R.drawable.bg_placeholder)//占位符
 
                 Glide.with(context!!)
                     .load(url)

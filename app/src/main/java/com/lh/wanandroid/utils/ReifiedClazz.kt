@@ -2,6 +2,8 @@ package com.lh.wanandroid.utils
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
+import com.lh.wanandroid.app.App
 
 /**
  *@author: lh
@@ -17,4 +19,9 @@ inline fun <reified T> cStartActivityWithData(context: Context, block: Intent.()
     val intent = Intent(context, T::class.java)
     intent.block()
     context.startActivity(intent)
+}
+
+
+fun String.shortToast(){
+    Toast.makeText(App.context, this, Toast.LENGTH_SHORT).show()
 }

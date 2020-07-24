@@ -26,4 +26,8 @@ class ProjectFragment: BaseMvpFragment<ProjectContract.View, ProjectContract.Pre
     override fun initChildView(view: View) {
 
     }
+
+    override fun scrollToTop() {
+
+    }
 }

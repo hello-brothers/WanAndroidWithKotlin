@@ -3,6 +3,7 @@ package com.lh.wanandroid.mvp.contract
 import com.lh.wanandroid.base.mvp.IModel
 import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
+import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 
 /**
  *@author: lh
@@ -10,7 +11,7 @@ import com.lh.wanandroid.base.mvp.IView
  */
 interface ProjectContract {
 
-    interface View: IView {
+    interface View: IView, IScrollToTop {
 
     }
 

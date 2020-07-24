@@ -25,4 +25,8 @@ class SystemFragment: BaseMvpFragment<SystemContract.View, SystemContract.Presen
     override fun initChildView(view: View) {
 
     }
+
+    override fun scrollToTop() {
+
+    }
 }
