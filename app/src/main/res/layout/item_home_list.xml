@@ -123,8 +123,8 @@
             android:gravity="start|top"
             android:maxLines="2"
             android:textSize="@dimen/sp_16"
-            android:textColor="@color/item_title"
             android:lineSpacingExtra="@dimen/dp_2"
+            android:textColor="@color/item_title"
             />
         
         <TextView

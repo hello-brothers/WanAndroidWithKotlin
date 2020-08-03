@@ -2,6 +2,7 @@ package com.lh.wanandroid.http
 
 import com.lh.wanandroid.http.api.HomeService
 import com.lh.wanandroid.http.api.SquareService
+import com.lh.wanandroid.http.api.SystemService
 import com.lh.wanandroid.http.api.WXArticleService
 import com.lh.wanandroid.http.utils.ServiceCreator
 
@@ -21,5 +22,9 @@ object RetrofitHelper {
 
     val wxArticleService by lazy {
         ServiceCreator.create<WXArticleService>()
+    }
+
+    val systemService by lazy {
+        ServiceCreator.create<SystemService>()
     }
 }

@@ -29,6 +29,7 @@ class WechatFragment: BaseMvpFragment<WechatContract.View, WechatContract.Presen
     private val pagerAdapter by lazy {
         WeChatPageAdapter(data, childFragmentManager)
     }
+
     override fun createPresenter(): WechatContract.Presenter  = WechatPresenter()
 
     override fun attachLayoutRes() = R.layout.fragment_wechat
@@ -71,6 +72,10 @@ class WechatFragment: BaseMvpFragment<WechatContract.View, WechatContract.Presen
     }
 
     override fun scrollToTop() {
-
+        pagerAdapter.getItem(viewPager.currentItem).run {
+            if (this is KnowledgeFragment){
+                this.scrollToTop()
+            }
+        }
     }
 }

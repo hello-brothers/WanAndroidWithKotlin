@@ -1,5 +1,7 @@
 package com.lh.wanandroid.adapter
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -27,5 +29,9 @@ class WeChatPageAdapter(private val list: MutableList<WXChapterBean>, fm: Fragme
     override fun getPageTitle(position: Int): CharSequence?  = list[position].name
 
     override fun getItemPosition(`object`: Any) =PagerAdapter.POSITION_NONE
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View?)
+    }
 
 }

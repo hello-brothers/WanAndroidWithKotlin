@@ -6,6 +6,7 @@ import com.lh.wanandroid.mvp.model.bean.WXChapterBean
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Path
 
 /**
  *@author: lh
@@ -26,5 +27,7 @@ interface WXArticleService {
      * https://wanandroid.com/wxarticle/list/408/1/json
      */
     @GET("wxarticle/list/{cid}/{page}/json")
-    fun getWXArticles(@Query("cid")cid: Int, @Query("page") page: Int): Observable<HttpResult<ArticleResponseBody>>
+    fun getWXArticles(@Path("cid")cid: Int, @Path("page") page: Int): Observable<HttpResult<ArticleResponseBody>>
+
+
 }
