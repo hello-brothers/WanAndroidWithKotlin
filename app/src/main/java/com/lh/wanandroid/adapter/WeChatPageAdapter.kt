@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.lh.wanandroid.mvp.model.bean.WXChapterBean
+import com.lh.wanandroid.ui.fragment.KnowledgeFragment
 
 /**
  *@author: lh
@@ -14,8 +15,8 @@ class WeChatPageAdapter(private val list: MutableList<WXChapterBean>, fm: Fragme
 
     private val fragments = mutableListOf<Fragment>()
     init {
-        list.forEach { _ ->
-            fragments.add(Fragment())
+        list.forEach {
+            fragments.add(KnowledgeFragment.newInstance(it.id))
         }
     }
 

@@ -1,9 +1,11 @@
 package com.lh.wanandroid.http.api
 
+import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
 import com.lh.wanandroid.mvp.model.bean.HttpResult
 import com.lh.wanandroid.mvp.model.bean.WXChapterBean
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  *@author: lh
@@ -18,4 +20,11 @@ interface WXArticleService {
      */
     @GET("wxarticle/chapters/json")
     fun getWXChapters(): Observable<HttpResult<MutableList<WXChapterBean>>>
+
+    /**
+     * 查看某个公众号历史数据
+     * https://wanandroid.com/wxarticle/list/408/1/json
+     */
+    @GET("wxarticle/list/{cid}/{page}/json")
+    fun getWXArticles(@Query("cid")cid: Int, @Query("page") page: Int): Observable<HttpResult<ArticleResponseBody>>
 }

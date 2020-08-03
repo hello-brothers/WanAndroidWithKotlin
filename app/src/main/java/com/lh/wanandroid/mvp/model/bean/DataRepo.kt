@@ -84,6 +84,7 @@ data class Banner(
     @SerializedName("url")
     val url: String
 )
+
 data class WXChapterBean(
     @SerializedName("children")
     val children: List<Any>,
@@ -102,3 +103,4 @@ data class WXChapterBean(
     @SerializedName("visible")
     val visible: Int
 )
+

@@ -45,6 +45,7 @@ class WechatFragment: BaseMvpFragment<WechatContract.View, WechatContract.Presen
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.setupWithViewPager(viewPager)
+
     }
 
     override fun setWXChapters(chapters: List<WXChapterBean>) {
