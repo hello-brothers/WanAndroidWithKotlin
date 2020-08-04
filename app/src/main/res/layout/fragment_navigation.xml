@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lh.multiple.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/multiple_status_view"
+    android:background="@color/viewBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <q.rorbin.verticaltablayout.VerticalTabLayout
+            android:id="@+id/navigationTabLayout"
+            android:layout_width="@dimen/dp_110"
+            android:layout_height="match_parent"
+            android:background="@color/vertical_tab_layout_bg"
+            app:tab_margin="@dimen/dp_16"
+            app:tab_height="@dimen/dp_50"
+            app:tab_mode="scrollable"
+            app:indicator_corners="@dimen/dp_10"
+            />
+
+        <View
+            android:layout_width="@dimen/dp_05"
+            android:layout_height="match_parent"
+            android:background="@color/line_divider"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            style="@style/RecyclerViewStyle"
+            />
+
+    </LinearLayout>
+
+
+</com.lh.multiple.MultipleStatusView>

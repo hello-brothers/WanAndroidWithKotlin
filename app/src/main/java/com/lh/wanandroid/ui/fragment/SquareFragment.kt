@@ -15,6 +15,7 @@ import com.lh.wanandroid.utils.shortToast
 import kotlinx.android.synthetic.main.refresh_layout.*
 
 /**
+ * 广场
  *@author: lh
  *CreateDate: 2020/7/3
  */

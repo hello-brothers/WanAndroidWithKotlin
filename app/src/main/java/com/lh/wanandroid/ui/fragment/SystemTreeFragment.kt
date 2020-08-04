@@ -46,17 +46,25 @@ class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTre
     }
 
     override fun setSystemTree(knowledgeList: List<KnowledgeTreeBody>) {
-        if (isRefresh){
-            adapter.setList(knowledgeList)
+
+        adapter.setList(knowledgeList)
+        if (isRefresh)
             swipeRefreshLayout.isRefreshing = false
-        }
-        else
-            adapter.addData(knowledgeList)
+
 
         if (adapter.data.isEmpty())
             mLayoutStatusView?.showEmpty()
         else
             mLayoutStatusView?.showContent()
+    }
+
+    override fun scrollToTop() {
+        recyclerView.apply {
+            if (linearLayoutManager.findFirstVisibleItemPosition() > 20)
+                scrollToPosition(0)
+            else
+                smoothScrollToPosition(0)
+        }
     }
 
     private class SystemTreeAdapter(data: MutableList<KnowledgeTreeBody>) : BaseQuickAdapter<KnowledgeTreeBody, BaseViewHolder>(R.layout.item_systemtree_list, data){

@@ -126,4 +126,13 @@ data class Knowledge(
     @Json(name = "visible") val visible: Int
 ) : Serializable
 
+//导航
+data class NavigationBean(
+    @SerializedName("articles")
+    val articles: List<Article>,
+    @SerializedName("cid")
+    val cid: Int,
+    @SerializedName("name")
+    val name: String
+)
 

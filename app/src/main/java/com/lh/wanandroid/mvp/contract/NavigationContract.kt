@@ -5,25 +5,23 @@ import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.model.bean.HttpResult
-import com.lh.wanandroid.mvp.model.bean.KnowledgeTreeBody
+import com.lh.wanandroid.mvp.model.bean.NavigationBean
 import io.reactivex.Observable
 
 /**
- * Author: lh
- * Description:
- * Data: 2020/8/3
+ *@author: lh
+ *CreateDate: 2020/8/4
  */
-interface SystemTreeContract {
-
+interface NavigationContract {
     interface View: IView, IScrollToTop{
-        fun setSystemTree(knowledgeList: List<KnowledgeTreeBody>)
+        fun setNavigation(navigationList: List<NavigationBean>)
     }
 
     interface Presenter: IPresenter<View>{
-        fun getSystemTree()
+        fun getNavigationTree()
     }
 
     interface Model: IModel{
-        fun getSystemTree(): Observable<HttpResult<List<KnowledgeTreeBody>>>
+        fun getNavigationTree(): Observable<HttpResult<List<NavigationBean>>>
     }
 }

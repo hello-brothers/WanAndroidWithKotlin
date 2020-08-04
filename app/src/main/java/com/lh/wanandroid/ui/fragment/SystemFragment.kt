@@ -12,6 +12,8 @@ import com.lh.wanandroid.mvp.presenter.SystemPresenter
 import kotlinx.android.synthetic.main.fragment_system.*
 
 /**
+ * 体系 包含SystemTreeFragment 和 NavigationFragment
+ *
  *@author: lh
  *CreateDate: 2020/7/3
  */
@@ -29,7 +31,7 @@ class SystemFragment: BaseMvpFragment<SystemContract.View, SystemContract.Presen
     private val fragmentList by lazy {
         ArrayList<Fragment>().apply {
             add(SystemTreeFragment.newInstance())
-            add(Fragment())
+            add(NavigationTreeFragment.newInstance())
         }
     }
 
@@ -61,7 +63,12 @@ class SystemFragment: BaseMvpFragment<SystemContract.View, SystemContract.Presen
     }
 
     override fun scrollToTop() {
-
+        pagerAdapter.getItem(viewPager.currentItem).apply {
+            if (this is SystemTreeFragment )
+                scrollToTop()
+            else if (this is NavigationTreeFragment)
+                scrollToTop()
+        }
     }
 
 
