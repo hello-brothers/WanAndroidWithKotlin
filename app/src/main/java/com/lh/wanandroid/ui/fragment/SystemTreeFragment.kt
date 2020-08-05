@@ -16,16 +16,12 @@ import kotlinx.android.synthetic.main.refresh_layout.*
  * Description:
  * Data: 2020/8/3
  */
-class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTreeContract.Presenter>(), SystemTreeContract.View {
-
+class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTreeContract.Presenter, KnowledgeTreeBody>(), SystemTreeContract.View {
 
     companion object{
         fun newInstance() = SystemTreeFragment()
     }
-    private val data = arrayListOf<KnowledgeTreeBody>()
-    private val adapter by lazy {
-        SystemTreeAdapter(data)
-    }
+
     override fun onRefreshList() {
         mPresenter?.getSystemTree()
 
@@ -35,7 +31,6 @@ class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTre
 
     override fun initChildView(view: View) {
 
-        recyclerView.adapter = adapter
     }
 
     override fun attachLayoutRes() = R.layout.fragment_systemtree
@@ -47,12 +42,12 @@ class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTre
 
     override fun setSystemTree(knowledgeList: List<KnowledgeTreeBody>) {
 
-        adapter.setList(knowledgeList)
+        rvAdapter.setList(knowledgeList)
         if (isRefresh)
             swipeRefreshLayout.isRefreshing = false
 
 
-        if (adapter.data.isEmpty())
+        if (rvAdapter.data.isEmpty())
             mLayoutStatusView?.showEmpty()
         else
             mLayoutStatusView?.showContent()
@@ -67,7 +62,16 @@ class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTre
         }
     }
 
-    private class SystemTreeAdapter(data: MutableList<KnowledgeTreeBody>) : BaseQuickAdapter<KnowledgeTreeBody, BaseViewHolder>(R.layout.item_systemtree_list, data){
+    override fun onLoadMore() {
+
+    }
+
+    override val isLoadMore: Boolean
+        get() = false
+
+    override fun generateAdapter() = SystemTreeAdapter(arrayListOf())
+
+    class SystemTreeAdapter(data: MutableList<KnowledgeTreeBody>) : BaseQuickAdapter<KnowledgeTreeBody, BaseViewHolder>(R.layout.item_systemtree_list, data){
         override fun convert(holder: BaseViewHolder, item: KnowledgeTreeBody) {
             holder.setText(R.id.title_first, item.name)
 
@@ -79,4 +83,5 @@ class SystemTreeFragment: BaseMvpListFragment<SystemTreeContract.View, SystemTre
         }
 
     }
+
 }

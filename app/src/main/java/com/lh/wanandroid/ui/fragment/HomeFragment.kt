@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import cn.bingoogolapple.bgabanner.BGABanner
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lh.wanandroid.adapter.HomeAdapter
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseMvpListFragment
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.refresh_layout.*
  *@author: lh
  *CreateDate: 2020/7/3
  */
-class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View{
+class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presenter, Article>(), HomeContract.View{
 
 
     companion object{
@@ -33,10 +35,6 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
         layoutInflater.inflate(R.layout.item_home_banner, null)
     }
 
-    /** recyclerview适配器 **/
-    private val homeAdapter: HomeAdapter by lazy {
-        HomeAdapter(datas)
-    }
 
     /** banner data **/
     private lateinit var bannerDatas: ArrayList<Banner>
@@ -71,47 +69,34 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
 
     override fun initChildView(view: View) {
 
-
-
-        recyclerView.adapter = homeAdapter
-
         bannerView.banner.run {
             setDelegate(bannerDelegate)
         }
 
-        homeAdapter.run {
-
+        rvAdapter.run {
             addHeaderView(bannerView)
-            loadMoreModule.setOnLoadMoreListener {
-                isRefresh = false
-                swipeRefreshLayout.isRefreshing = false
-                val pageIndex = homeAdapter.data.size / 20
-                mPresenter?.requestArticles(pageIndex)
-            }
         }
-
     }
 
     override fun onRefreshList() {
-        homeAdapter.loadMoreModule.isEnableLoadMore = false
         mPresenter?.requestHomeData()
     }
 
     override fun setArticles(articles: ArticleResponseBody) {
 
         if (isRefresh){
-            homeAdapter.setList(articles.datas)
+            rvAdapter.setList(articles.datas)
             swipeRefreshLayout.isRefreshing = false
         }
         else
-            homeAdapter.addData(articles.datas)
+            rvAdapter.addData(articles.datas)
 
         if (articles.size > articles.datas.size)
-            homeAdapter.loadMoreModule.loadMoreEnd(isRefresh)
+            rvAdapter.loadMoreModule.loadMoreEnd(isRefresh)
         else
-            homeAdapter.loadMoreModule.loadMoreComplete()
+            rvAdapter.loadMoreModule.loadMoreComplete()
 
-        if (homeAdapter.data.isEmpty())
+        if (rvAdapter.data.isEmpty())
             mLayoutStatusView?.showEmpty()
         else
             mLayoutStatusView?.showContent()
@@ -146,6 +131,13 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
                 smoothScrollToPosition(0)
         }
     }
+
+    override fun onLoadMore() {
+        val pageIndex = rvAdapter.data.size / 20
+        mPresenter?.requestArticles(pageIndex)
+    }
+
+    override fun generateAdapter() = HomeAdapter(datas)
 
 
 }

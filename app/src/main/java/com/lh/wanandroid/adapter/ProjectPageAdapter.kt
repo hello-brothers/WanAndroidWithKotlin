@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.lh.wanandroid.mvp.model.bean.WXChapterBean
-import com.lh.wanandroid.ui.fragment.KnowledgeFragment
+import com.lh.wanandroid.ui.fragment.ProjectListFragment
 
 /**
  *@author: lh
@@ -16,7 +16,7 @@ class ProjectPageAdapter(fm: FragmentManager, private  val dataList: List<WXChap
     private val fragments = mutableListOf<Fragment>()
     init {
         dataList.forEach {
-            fragments.add(KnowledgeFragment.newInstance(it.id))
+            fragments.add(ProjectListFragment.newInstance(it.id))
         }
     }
     override fun getItem(position: Int) = fragments[position]

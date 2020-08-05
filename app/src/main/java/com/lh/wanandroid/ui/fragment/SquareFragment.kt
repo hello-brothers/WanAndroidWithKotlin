@@ -4,6 +4,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lh.wanandroid.adapter.HomeAdapter
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseMvpListFragment
@@ -19,16 +21,13 @@ import kotlinx.android.synthetic.main.refresh_layout.*
  *@author: lh
  *CreateDate: 2020/7/3
  */
-class SquareFragment: BaseMvpListFragment<SquareContract.View, SquareContract.Presenter>(), SquareContract.View {
+class SquareFragment: BaseMvpListFragment<SquareContract.View, SquareContract.Presenter, Article>(), SquareContract.View {
 
     companion object{
         fun getInstance(): SquareFragment = SquareFragment()
     }
 
     private val data = ArrayList<Article>()
-    private val adapter by lazy {
-        HomeAdapter(data)
-    }
 
     override fun createPresenter(): SquareContract.Presenter  = SquarePresenter()
 
@@ -44,21 +43,12 @@ class SquareFragment: BaseMvpListFragment<SquareContract.View, SquareContract.Pr
         /** 不设置 该fragment不接受onCreateOptionsMenu的调用 **/
         setHasOptionsMenu(true)
 
-        recyclerView.adapter = adapter
-
-        adapter.loadMoreModule.setOnLoadMoreListener {
-            isRefresh = false
-            swipeRefreshLayout.isRefreshing = false
-            val page = adapter.data.size / pageSize
-            mPresenter?.requestSquareList(page)
-        }
-
     }
 
     override fun setSquareList(article: ArticleResponseBody) {
 
         article.datas.let {
-            adapter.run {
+            rvAdapter.run {
                 if (isRefresh){
                     setList(it)
                     swipeRefreshLayout.isRefreshing = false
@@ -73,7 +63,7 @@ class SquareFragment: BaseMvpListFragment<SquareContract.View, SquareContract.Pr
             }
         }
 
-        if (adapter.data.isEmpty())
+        if (rvAdapter.data.isEmpty())
             mLayoutStatusView?.showEmpty()
         else
             mLayoutStatusView?.showContent()
@@ -102,7 +92,15 @@ class SquareFragment: BaseMvpListFragment<SquareContract.View, SquareContract.Pr
     }
 
     override fun onRefreshList() {
-        adapter.loadMoreModule.isEnableLoadMore = false
         mPresenter?.requestSquareList(0)
     }
+
+    override fun onLoadMore() {
+        (rvAdapter.data.size / pageSize).run{
+            mPresenter?.requestSquareList(this)
+        }
+
+    }
+
+    override fun generateAdapter() = HomeAdapter(data)
 }
