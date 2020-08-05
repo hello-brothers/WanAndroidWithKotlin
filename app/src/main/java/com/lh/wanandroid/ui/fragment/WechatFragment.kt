@@ -43,6 +43,7 @@ class WechatFragment: BaseMvpFragment<WechatContract.View, WechatContract.Presen
 
     override fun initChildView(view: View) {
 
+        mLayoutStatusView = multiple_status_view
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.setupWithViewPager(viewPager)
