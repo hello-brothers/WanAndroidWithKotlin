@@ -79,4 +79,13 @@ class  ProjectListFragment: BaseMvpListFragment<ProjectListContract.View, Projec
         }
     }
 
+    override fun scrollToTop() {
+        linearLayoutManager.findFirstVisibleItemPosition().run {
+            if (this > 20)
+                recyclerView.scrollToPosition(0)
+            else
+                recyclerView.smoothScrollToPosition(0)
+        }
+    }
+
 }

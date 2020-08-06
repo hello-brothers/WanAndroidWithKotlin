@@ -66,6 +66,9 @@ class ProjectFragment: BaseMvpFragment<ProjectContract.View, ProjectContract.Pre
     }
 
     override fun scrollToTop() {
-
+        pageAdapter.getItem(viewpager.currentItem).apply {
+            this as ProjectListFragment
+            this.scrollToTop()
+        }
     }
 }
