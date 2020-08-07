@@ -2,6 +2,7 @@ package com.lh.wanandroid.base
 
 import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
+import com.lh.wanandroid.ext.showToast
 
 /**
  *@author: lh
@@ -14,6 +15,7 @@ abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity()
     override fun initView() {
         mPresenter = createPresenter()
         mPresenter?.attachView(this as V)
+        initChildView()
     }
 
     /** 创建Presenter **/
@@ -24,6 +26,8 @@ abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity()
         mPresenter?.detachView()
         this.mPresenter = null
     }
+
+    abstract fun initChildView()
 
     override fun showLoading() {
 
@@ -38,7 +42,7 @@ abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity()
     }
 
     override fun showDefaultMsg(msg: String) {
-
+        showToast(msg)
     }
 
     override fun showMsg(msg: String) {

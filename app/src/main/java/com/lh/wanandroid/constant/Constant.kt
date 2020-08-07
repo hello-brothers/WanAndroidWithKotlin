@@ -12,4 +12,6 @@ object Constant {
      * id key
      */
     const val CONTENT_CID_KEY = "cid"
+
+    const val LOGIN_KEY = "login"
 }

@@ -34,4 +34,17 @@
     <!--    menu Action-->
     <string name="action_search">搜索</string>
     <string name="action_add">新增</string>
+    
+    <!--    login activity-->
+    <string name="user_login">用户登录</string>
+    <string name="user_tip">请使用WanAndroid账号登录！</string>
+    <string name="hint_login_user">用户名</string>
+    <string name="hint_login_password">密码</string>
+    <string name="btn_login">登录</string>
+    <string name="no_account">没有账号？去注册</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_fail">登录失败</string>
+    <string name="username_not_empty">用户名不能为空</string>
+    <string name="password_not_empty">密码不能为空</string>
+
 </resources>

@@ -15,6 +15,7 @@
     >
 
     <ImageView
+        android:id="@+id/ivRank"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         android:src="@drawable/ic_rank_white_24dp"

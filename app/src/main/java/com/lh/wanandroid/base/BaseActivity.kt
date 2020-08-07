@@ -6,7 +6,6 @@ import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.lh.wanandroid.R
@@ -26,6 +25,9 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class BaseActivity: AppCompatActivity() {
 
+
+    /** loginStatus **/
+    protected var isLogin by Preference(Constant.LOGIN_KEY, false)
 
     /** 主题色 **/
     private val mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)

@@ -28,4 +28,8 @@ object RetrofitHelper {
     val projectService by lazy {
         ServiceCreator.create<ProjectService>()
     }
+
+    val loginAndRegisterService by lazy {
+        ServiceCreator.create<LoginAndRegisterService>()
+    }
 }

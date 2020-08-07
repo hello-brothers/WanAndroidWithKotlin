@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.lh.wanandroid.app.App
+import com.lh.wanandroid.ext.showToast
 
 /**
  *@author: lh
@@ -22,6 +23,5 @@ inline fun <reified T> cStartActivityWithData(context: Context, block: Intent.()
 }
 
 
-fun String.shortToast(){
-    Toast.makeText(App.context, this, Toast.LENGTH_SHORT).show()
-}
+
+

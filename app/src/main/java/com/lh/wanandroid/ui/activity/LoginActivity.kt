@@ -1,9 +1,15 @@
 package com.lh.wanandroid.ui.activity
 
+import android.view.MenuItem
+import android.view.View
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseMvpActivity
+import com.lh.wanandroid.ext.shortToast
 import com.lh.wanandroid.mvp.contract.LoginContract
+import com.lh.wanandroid.mvp.model.bean.LoginData
 import com.lh.wanandroid.mvp.presenter.LoginPresenter
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 /**
  *@author: lh
@@ -20,5 +26,61 @@ class LoginActivity: BaseMvpActivity<LoginContract.View, LoginContract.Presenter
 
     override fun start() {
 
+    }
+
+    override fun initChildView() {
+        toolbar.run {
+            title = getString(R.string.user_login)
+            setSupportActionBar(this)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
+        btnLogin.setOnClickListener(clickListener)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home){
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun loginSuccess(data: LoginData) {
+        resources.getString(R.string.login_success).shortToast()
+        isLogin = true
+
+    }
+
+    /** 页面点击事件 **/
+    private val clickListener = View.OnClickListener {
+        when(it.id){
+            R.id.btnLogin->{
+                login()
+            }
+        }
+    }
+
+    private fun login(){
+        if (validate())
+            mPresenter?.loginWanAndroid(etUserName.text.trim().toString(), etPassword.text.toString())
+    }
+
+    private fun validate(): Boolean{
+        etUserName.run {
+            if (text.isEmpty()){
+                error = resources.getString(R.string.username_not_empty)
+                return false
+            }
+        }
+
+        etPassword.run {
+            if (text.isEmpty()){
+                error = resources.getString(R.string.password_not_empty)
+                return false
+            }
+        }
+
+        return true
     }
 }

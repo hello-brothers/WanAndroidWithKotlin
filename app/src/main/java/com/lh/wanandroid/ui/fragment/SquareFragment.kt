@@ -9,11 +9,11 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lh.wanandroid.adapter.HomeAdapter
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseMvpListFragment
+import com.lh.wanandroid.ext.shortToast
 import com.lh.wanandroid.mvp.contract.SquareContract
 import com.lh.wanandroid.mvp.model.bean.Article
 import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
 import com.lh.wanandroid.mvp.presenter.SquarePresenter
-import com.lh.wanandroid.utils.shortToast
 import kotlinx.android.synthetic.main.refresh_layout.*
 
 /**

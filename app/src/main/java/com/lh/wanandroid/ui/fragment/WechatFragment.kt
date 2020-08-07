@@ -8,7 +8,6 @@ import com.lh.wanandroid.base.BaseMvpFragment
 import com.lh.wanandroid.mvp.contract.WechatContract
 import com.lh.wanandroid.mvp.model.bean.WXChapterBean
 import com.lh.wanandroid.mvp.presenter.WechatPresenter
-import com.lh.wanandroid.utils.shortToast
 import kotlinx.android.synthetic.main.fragment_wechat.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

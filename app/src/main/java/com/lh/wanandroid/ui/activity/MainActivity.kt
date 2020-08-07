@@ -2,19 +2,26 @@ package com.lh.wanandroid.ui.activity
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
 import com.lh.wanandroid.base.BaseMvpListFragment
+import com.lh.wanandroid.ext.shortToast
 import com.lh.wanandroid.mvp.contract.MainContract
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
-import com.lh.wanandroid.utils.shortToast
+import com.lh.wanandroid.utils.cStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(), MainContract.View{
 
@@ -42,7 +49,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     override fun initData() {
     }
 
-    override fun initView() {
+    override fun initChildView() {
         toolbar.run {
             title = getString(R.string.app_name)
             setSupportActionBar(this)
@@ -50,11 +57,13 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
 
         showFragment(mIndex)
 
+        initLeftNavigation()
         initBottomNavigation()
+
         initDrawableLayout()
         initFloatActionBtn()
-
     }
+
 
     override fun start() {
     }
@@ -67,6 +76,17 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
 
     private fun initBottomNavigation(){
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemReselectedListener)
+    }
+
+    private fun initLeftNavigation(){
+        navigationView.run {
+            getHeaderView(0).run {
+
+                findViewById<ImageView>(R.id.ivRank).setOnClickListener(leftNavigationHeadClickListener)
+                findViewById<TextView>(R.id.userName).setOnClickListener(leftNavigationHeadClickListener)
+            }
+            setNavigationItemSelectedListener(leftNavigationMenuClickListener)
+        }
     }
 
     private fun initFloatActionBtn(){
@@ -216,6 +236,34 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
             R.id.action_search -> getString(R.string.action_search).shortToast()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    /** left navigation Menu Listener **/
+    private val leftNavigationMenuClickListener = NavigationView.OnNavigationItemSelectedListener{
+        when(it.itemId){
+            //我的积分
+            R.id.navScore ->{
+                it.title.toString().shortToast()
+            }
+            R.id.navCollect ->{
+                it.title.toString().shortToast()
+            }
+
+        }
+
+        true
+    }
+
+    private val leftNavigationHeadClickListener = View.OnClickListener {
+        when(it.id){
+            R.id.ivRank ->{
+                cStartActivity<LoginActivity>(this)
+            }
+            R.id.userName ->{
+                cStartActivity<LoginActivity>(this)
+            }
+        }
     }
 
 }
