@@ -14,14 +14,20 @@ import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
 import com.lh.wanandroid.base.BaseMvpListFragment
+import com.lh.wanandroid.constant.Constant
+import com.lh.wanandroid.event.LoginEvent
 import com.lh.wanandroid.ext.shortToast
 import com.lh.wanandroid.mvp.contract.MainContract
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
+import com.lh.wanandroid.utils.Preference
 import com.lh.wanandroid.utils.cStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.refresh_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(), MainContract.View{
 
@@ -40,6 +46,8 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     private var mSystemFragment: SystemFragment?        = null
     private var mWechatFragment: WechatFragment?        = null
 
+
+    private var userName by Preference(Constant.USER_NAME, "")
 
     /** 当前界面显示fragment位置索引 **/
     private var mIndex = FRAGMENT_HOME
@@ -63,7 +71,6 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         initDrawableLayout()
         initFloatActionBtn()
     }
-
 
     override fun start() {
     }
@@ -263,6 +270,19 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
             R.id.userName ->{
                 cStartActivity<LoginActivity>(this)
             }
+        }
+    }
+
+
+    /** Event **/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loginEvent(e: LoginEvent){
+        if (e.isLogin){
+            navigationView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = userName
+            navigationView.menu.findItem(R.id.navLogout).isVisible = true
+            mHomeFragment?.onRefresh()
+        }else{
+            navigationView.menu.findItem(R.id.navLogout).isVisible = false
         }
     }
 

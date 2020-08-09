@@ -132,6 +132,11 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
         }
     }
 
+    override fun onRefresh() {
+        onRefreshList()
+
+    }
+
     override fun onLoadMore() {
         val pageIndex = rvAdapter.data.size / 20
         mPresenter?.requestArticles(pageIndex)

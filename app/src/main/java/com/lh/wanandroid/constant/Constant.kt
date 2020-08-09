@@ -14,4 +14,10 @@ object Constant {
     const val CONTENT_CID_KEY = "cid"
 
     const val LOGIN_KEY = "login"
+
+    const val USER_NAME = "userName"
+
+    const val USER_PASSWORD = "userPassword"
+
+    const val TOKEN = "token"
 }

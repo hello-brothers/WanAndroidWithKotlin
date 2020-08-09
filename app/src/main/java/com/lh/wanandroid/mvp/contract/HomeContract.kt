@@ -3,6 +3,7 @@ package com.lh.wanandroid.mvp.contract
 import com.lh.wanandroid.base.mvp.IModel
 import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
+import com.lh.wanandroid.mvp.contract.fcinterface.IRefresh
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.model.bean.Article
 import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
@@ -16,7 +17,7 @@ import io.reactivex.Observable
  */
 interface HomeContract {
 
-    interface View: IView, IScrollToTop{
+    interface View: IView, IScrollToTop, IRefresh{
 
         fun setArticles(articles: ArticleResponseBody)
 
