@@ -2,13 +2,16 @@ package com.lh.wanandroid.base
 
 import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
+import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.ext.showToast
+import com.lh.wanandroid.utils.Preference
 
 /**
  *@author: lh
  *CreateDate: 2020/6/28
  */
 abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity(), IView {
+
 
     protected var mPresenter: P? = null
 
@@ -46,6 +49,10 @@ abstract class BaseMvpActivity<in V: IView, P: IPresenter<in V>>: BaseActivity()
     }
 
     override fun showMsg(msg: String) {
+
+    }
+
+    override fun autoRefresh() {
 
     }
 }

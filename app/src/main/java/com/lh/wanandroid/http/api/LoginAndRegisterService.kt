@@ -5,6 +5,7 @@ import com.lh.wanandroid.mvp.model.bean.LoginData
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
@@ -20,4 +21,11 @@ interface LoginAndRegisterService {
     @POST("user/login")
     @FormUrlEncoded
     fun loginWanAndroid(@Field("username")username: String, @Field("password") password: String): Observable<HttpResult<LoginData>>
+
+    /**
+     * 登出
+     * https://www.wanandroid.com/user/logout/json
+     */
+    @GET("user/logout/json")
+    fun logout(): Observable<HttpResult<Any?>>
 }

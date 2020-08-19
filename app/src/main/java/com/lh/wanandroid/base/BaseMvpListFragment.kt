@@ -67,4 +67,9 @@ abstract class BaseMvpListFragment<in V: IView, P: IPresenter<V>, B> : BaseMvpFr
 
     /** 是否支持加载更多 默认为支持加载更多（此时adapter需要实现LoadMoreModule接口） **/
     open val isLoadMore = true
+
+    override fun autoRefresh() {
+        super.autoRefresh()
+        onRefreshList()
+    }
 }

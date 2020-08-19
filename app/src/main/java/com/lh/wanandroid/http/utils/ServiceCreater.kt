@@ -5,6 +5,7 @@ import com.lh.wanandroid.app.App
 import com.lh.wanandroid.constant.HttpConstant
 import com.lh.wanandroid.http.interceptor.CacheInterceptor
 import com.lh.wanandroid.http.interceptor.HeaderInterceptor
+import com.lh.wanandroid.http.interceptor.LogoutInterceptor
 import com.lh.wanandroid.http.interceptor.SaveCookieInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient

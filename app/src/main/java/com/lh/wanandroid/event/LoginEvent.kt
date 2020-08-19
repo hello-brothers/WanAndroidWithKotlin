@@ -5,4 +5,5 @@ package com.lh.wanandroid.event
  * Description:
  * Data: 2020/8/9
  */
-class LoginEvent(var isLogin: Boolean)
+
+class LoginEvent(val isLogin: Boolean)

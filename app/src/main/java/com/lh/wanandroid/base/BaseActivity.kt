@@ -28,7 +28,12 @@ abstract class BaseActivity: AppCompatActivity() {
 
     /** loginStatus **/
     protected var isLogin by Preference(Constant.LOGIN_KEY, false)
-
+    /** userName **/
+    protected var mUserName by Preference(Constant.USERNAME_KEY, "")
+    /** password **/
+    protected var mPassword by Preference(Constant.PASSWORD_KEY, "")
+    /** token **/
+    protected var mToken by Preference(Constant.TOKEN_KEY, "")
     /** 主题色 **/
     private val mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
     protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)

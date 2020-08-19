@@ -47,4 +47,9 @@ abstract class BaseMvpFragment<in V: IView, P: IPresenter<V>>: BaseFragment(), I
     override fun showMsg(msg: String) {
 
     }
+
+    override fun autoRefresh() {
+
+    }
+
 }

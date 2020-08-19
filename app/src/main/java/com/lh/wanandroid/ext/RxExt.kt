@@ -28,16 +28,20 @@ fun <T> Observable<HttpResult<T>>.deal(mView: IView?, onSuccess: (T)-> Unit) {
              override fun onSuccess(t: T) {
                  onSuccess.invoke(t)
              }
-
-
          })
-
-
-
-
-
 }
 
+fun <T> Observable<HttpResult<T>>.logoutDeal(mView: IView?, onSuccess: (T) -> Unit){
+    compose(SchedulerUtils.ioToMain())
+        .retryWhen(ReTryWithDelay())
+        .compose(RxUtil.handleLogoutResult())
+        .subscribeWith(object : BaseObservable<T>(mView){
+            override fun onSuccess(t: T) {
+                onSuccess.invoke(t)
+            }
+
+        })
+}
 
 
 

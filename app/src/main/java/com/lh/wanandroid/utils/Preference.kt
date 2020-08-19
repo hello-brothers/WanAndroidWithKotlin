@@ -21,6 +21,11 @@ class Preference<T>(val name: String, private val default: T): ReadWriteProperty
         private val prefs: SharedPreferences by lazy {
             App.context.getSharedPreferences(file_name, Context.MODE_PRIVATE)
         }
+
+        /** 删除全部数据 **/
+        fun clearPreference(){
+            prefs.edit().clear().apply()
+        }
     }
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return getSharedPreferences(name, default)

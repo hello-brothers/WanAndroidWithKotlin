@@ -14,9 +14,9 @@ import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
 import com.lh.wanandroid.base.BaseMvpListFragment
-import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.event.LoginEvent
 import com.lh.wanandroid.ext.shortToast
+import com.lh.wanandroid.ext.showToast
 import com.lh.wanandroid.mvp.contract.MainContract
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.presenter.MainPresenter
@@ -24,10 +24,13 @@ import com.lh.wanandroid.ui.fragment.*
 import com.lh.wanandroid.utils.Preference
 import com.lh.wanandroid.utils.cStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.refresh_layout.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(), MainContract.View{
 
@@ -47,7 +50,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     private var mWechatFragment: WechatFragment?        = null
 
 
-    private var userName by Preference(Constant.USER_NAME, "")
+    private lateinit var tvUserName: TextView
 
     /** 当前界面显示fragment位置索引 **/
     private var mIndex = FRAGMENT_HOME
@@ -78,6 +81,17 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     override fun createPresenter() = MainPresenter()
 
     override fun showLogoutSuccess(success: Boolean) {
+        if (success){
+            doAsync {
+                Preference.clearPreference()
+                uiThread {
+                    getString(R.string.logout_success).shortToast()
+                    mUserName = tvUserName.text.trim().toString()
+                    isLogin = false
+                    EventBus.getDefault().post(LoginEvent(false))
+                }
+            }
+        }
 
     }
 
@@ -88,14 +102,16 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     private fun initLeftNavigation(){
         navigationView.run {
             getHeaderView(0).run {
-
+                tvUserName = findViewById(R.id.userName)
                 findViewById<ImageView>(R.id.ivRank).setOnClickListener(leftNavigationHeadClickListener)
                 findViewById<TextView>(R.id.userName).setOnClickListener(leftNavigationHeadClickListener)
             }
+            menu.findItem(R.id.navLogout).isVisible = isLogin
             setNavigationItemSelectedListener(leftNavigationMenuClickListener)
         }
     }
 
+    /** FloatingActionButton **/
     private fun initFloatActionBtn(){
         floating_action_btn.setOnClickListener {
             getCurrentFragmentByIndex(mIndex)?.let {
@@ -245,7 +261,6 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         return super.onOptionsItemSelected(item)
     }
 
-
     /** left navigation Menu Listener **/
     private val leftNavigationMenuClickListener = NavigationView.OnNavigationItemSelectedListener{
         when(it.itemId){
@@ -255,6 +270,10 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
             }
             R.id.navCollect ->{
                 it.title.toString().shortToast()
+            }
+
+            R.id.navLogout ->{
+                logout()
             }
 
         }
@@ -273,19 +292,21 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         }
     }
 
-
-    /** Event **/
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun loginEvent(e: LoginEvent){
-        if (e.isLogin){
-            navigationView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = userName
-            navigationView.menu.findItem(R.id.navLogout).isVisible = true
-            mHomeFragment?.onRefresh()
-        }else{
-            navigationView.menu.findItem(R.id.navLogout).isVisible = false
-        }
+    private fun logout(){
+        mPresenter?.logout()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loginEvent(event: LoginEvent){
+        if (event.isLogin){
+            tvUserName.text = mUserName
+            navigationView.menu.findItem(R.id.navLogout).isVisible = true
+        }else{
+            tvUserName.text = getString(R.string.go_login)
+            navigationView.menu.findItem(R.id.navLogout).isVisible = false
+        }
+        mHomeFragment?.autoRefresh()
+    }
 }
 
 

@@ -1,6 +1,7 @@
 package com.lh.wanandroid.rx
 
 import com.lh.wanandroid.http.function.ErrorResume
+import com.lh.wanandroid.http.function.LogoutResponseFunction
 import com.lh.wanandroid.http.function.ResponseFunction
 import com.lh.wanandroid.mvp.model.bean.BaseBean
 import com.lh.wanandroid.mvp.model.bean.HttpResult
@@ -21,6 +22,13 @@ class RxUtil {
             return ObservableTransformer {
                 it.onErrorResumeNext(ErrorResume())
                 it.flatMap(ResponseFunction())
+            }
+        }
+
+        fun <T> handleLogoutResult(): ObservableTransformer<HttpResult<T>, T>{
+            return ObservableTransformer {
+                it.onErrorResumeNext(ErrorResume())
+                it.flatMap(LogoutResponseFunction())
             }
         }
     }

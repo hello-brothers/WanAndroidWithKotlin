@@ -47,4 +47,7 @@
     <string name="username_not_empty">用户名不能为空</string>
     <string name="password_not_empty">密码不能为空</string>
 
+    <string name="logout_success">已退出登录</string>
+
+
 </resources>

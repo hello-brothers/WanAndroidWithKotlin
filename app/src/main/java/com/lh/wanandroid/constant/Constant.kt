@@ -15,9 +15,7 @@ object Constant {
 
     const val LOGIN_KEY = "login"
 
-    const val USER_NAME = "userName"
-
-    const val USER_PASSWORD = "userPassword"
-
-    const val TOKEN = "token"
+    const val USERNAME_KEY = "username"
+    const val PASSWORD_KEY = "password"
+    const val TOKEN_KEY = "token"
 }
