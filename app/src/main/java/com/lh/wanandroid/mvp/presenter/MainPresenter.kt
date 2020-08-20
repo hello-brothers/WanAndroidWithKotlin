@@ -18,4 +18,10 @@ class MainPresenter: BasePresenter<MainContract.Model, MainContract.View>(), Mai
         }
     }
 
+    override fun getUserInfo() {
+        mModel?.getUserInfo()?.deal(mView){
+            mView?.showUserInfo(it)
+        }
+    }
+
 }

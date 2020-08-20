@@ -165,3 +165,14 @@ data class LoginData(
     val username: String
 )
 
+data class UserInfoBody(
+    @SerializedName("coinCount")
+    val coinCount: Int,
+    @SerializedName("rank")
+    val rank: Int,
+    @SerializedName("userId")
+    val userId: Int,
+    @SerializedName("username")
+    val username: String
+)
+

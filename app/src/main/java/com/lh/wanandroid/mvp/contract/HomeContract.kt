@@ -17,7 +17,7 @@ import io.reactivex.Observable
  */
 interface HomeContract {
 
-    interface View: IView, IScrollToTop, IRefresh{
+    interface View: IView, IScrollToTop{
 
         fun setArticles(articles: ArticleResponseBody)
 

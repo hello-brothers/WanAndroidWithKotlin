@@ -5,26 +5,26 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.lh.wanandroid.R
 import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
-import com.lh.wanandroid.base.BaseMvpListFragment
+import com.lh.wanandroid.base.mvp.IView
 import com.lh.wanandroid.event.LoginEvent
 import com.lh.wanandroid.ext.shortToast
-import com.lh.wanandroid.ext.showToast
 import com.lh.wanandroid.mvp.contract.MainContract
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
+import com.lh.wanandroid.mvp.model.bean.UserInfoBody
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
 import com.lh.wanandroid.utils.Preference
+import com.lh.wanandroid.utils.SettingUtil
 import com.lh.wanandroid.utils.cStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -52,6 +52,9 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
 
     private lateinit var tvUserName: TextView
 
+    private lateinit var tvUserRank: TextView
+    private lateinit var tvUserGrade: TextView
+
     /** 当前界面显示fragment位置索引 **/
     private var mIndex = FRAGMENT_HOME
 
@@ -76,6 +79,8 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     }
 
     override fun start() {
+        if (isLogin)
+            mPresenter?.getUserInfo()
     }
 
     override fun createPresenter() = MainPresenter()
@@ -95,6 +100,11 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
 
     }
 
+    override fun showUserInfo(userInfo: UserInfoBody) {
+        tvUserRank.text = userInfo.rank.toString()
+        tvUserGrade.text = (userInfo.coinCount/100+1).toString()
+    }
+
     private fun initBottomNavigation(){
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemReselectedListener)
     }
@@ -103,9 +113,13 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         navigationView.run {
             getHeaderView(0).run {
                 tvUserName = findViewById(R.id.userName)
+                tvUserGrade = findViewById(R.id.tvUserGrade)
+                tvUserRank = findViewById(R.id.tvUserRank)
+
                 findViewById<ImageView>(R.id.ivRank).setOnClickListener(leftNavigationHeadClickListener)
                 findViewById<TextView>(R.id.userName).setOnClickListener(leftNavigationHeadClickListener)
             }
+            tvUserName.text = if (isLogin) mUserName else getString(R.string.go_login)
             menu.findItem(R.id.navLogout).isVisible = isLogin
             setNavigationItemSelectedListener(leftNavigationMenuClickListener)
         }
@@ -160,7 +174,6 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
             else -> false
         }
     }
-
 
     private fun showFragment(index: Int){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -236,6 +249,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     }
 
 
+    /** 用户list的fragment滑动到顶部 **/
     private fun getCurrentFragmentByIndex(index: Int): IScrollToTop? {
         return when(index){
             FRAGMENT_HOME ->  mHomeFragment
@@ -247,6 +261,19 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         }
     }
 
+    /** 返回当前fragment用于刷新界面数据 **/
+    private fun getCurrentViewByIndex(index: Int): IView? {
+        return when(index){
+            FRAGMENT_HOME ->  mHomeFragment
+            FRAGMENT_PROJECT -> mProjectFragment
+            FRAGMENT_SYSTEM -> mSystemFragment
+            FRAGMENT_WECHAT -> mWechatFragment
+            FRAGMENT_SQUARE -> mSquareFragment
+            else -> null
+        }
+    }
+
+    /** Menu **/
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (mIndex != FRAGMENT_SQUARE)
             menuInflater.inflate(R.menu.menu_activity_main, menu)
@@ -276,6 +303,18 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 logout()
             }
 
+            R.id.navNightMode ->{
+                if (SettingUtil.getNightModeStatus()){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    SettingUtil.setNightModeStatus(false)
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    SettingUtil.setNightModeStatus(true)
+                }
+
+                window.setWindowAnimations(R.style.WindowAnimationFadeInAndOut)
+            }
+
         }
 
         true
@@ -301,12 +340,18 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         if (event.isLogin){
             tvUserName.text = mUserName
             navigationView.menu.findItem(R.id.navLogout).isVisible = true
+            mPresenter?.getUserInfo()
         }else{
             tvUserName.text = getString(R.string.go_login)
             navigationView.menu.findItem(R.id.navLogout).isVisible = false
+            tvUserGrade.text = getString(R.string.nav_line_2)
+            tvUserRank.text = getString(R.string.nav_line_2)
         }
-        mHomeFragment?.autoRefresh()
+
+        getCurrentViewByIndex(mIndex)?.autoRefresh()
     }
+
+
 }
 
 

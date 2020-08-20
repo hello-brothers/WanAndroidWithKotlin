@@ -2,6 +2,7 @@ package com.lh.wanandroid.http.api
 
 import com.lh.wanandroid.mvp.model.bean.HttpResult
 import com.lh.wanandroid.mvp.model.bean.LoginData
+import com.lh.wanandroid.mvp.model.bean.UserInfoBody
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -28,4 +29,11 @@ interface LoginAndRegisterService {
      */
     @GET("user/logout/json")
     fun logout(): Observable<HttpResult<Any?>>
+
+    /**
+     * 获取个人积分
+     * https://www.wanandroid.com/lg/coin/userinfo/json
+     */
+    @GET("lg/coin/userinfo/json")
+    fun getUserInfo(): Observable<HttpResult<UserInfoBody>>
 }

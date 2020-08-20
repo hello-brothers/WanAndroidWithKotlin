@@ -2,6 +2,7 @@ package com.lh.wanandroid.base
 
 import android.content.Context
 import android.content.IntentFilter
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.Gravity
@@ -14,6 +15,7 @@ import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.event.NetworkChangeEvent
 import com.lh.wanandroid.receiver.NetworkChangeReceiver
 import com.lh.wanandroid.utils.Preference
+import com.lh.wanandroid.utils.SettingUtil
 import com.lh.wanandroid.utils.StatusBarUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -35,7 +37,7 @@ abstract class BaseActivity: AppCompatActivity() {
     /** token **/
     protected var mToken by Preference(Constant.TOKEN_KEY, "")
     /** 主题色 **/
-    private val mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
+    private var mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
     protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
 
     /** 提示View **/
@@ -114,6 +116,11 @@ abstract class BaseActivity: AppCompatActivity() {
 
     /** 关于颜色方面的初始化 **/
     open fun initColor(){
+        mThemeColor = if (SettingUtil.getNightModeStatus()){
+            resources.getColor(R.color.colorPrimary)
+        }else{
+            SettingUtil.getColor()
+        }
         StatusBarUtil.setColor(this, mThemeColor, 0)
     }
     /** 初始化TipView **/

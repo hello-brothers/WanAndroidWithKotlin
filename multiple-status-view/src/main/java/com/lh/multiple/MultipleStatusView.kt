@@ -24,10 +24,10 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
     private val mNoNetworkViewResId: Int
 
     /** 何种视图view **/
-    private lateinit var mEmptyView: View
-    private lateinit var mErrorView: View
-    private lateinit var mLoadingView: View
-    private lateinit var mNoNetworkView: View
+    private var mEmptyView: View? = null
+    private var mErrorView: View? = null
+    private var mLoadingView: View? = null
+    private var mNoNetworkView: View? = null
 
     private var mViewStatus: Int = STATUS_CONTENT
 
@@ -95,15 +95,15 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
     }
     private fun showEmpty(layoutId: Int, layoutParams: ViewGroup.LayoutParams){
 
-        mEmptyView = if (!this::mEmptyView.isInitialized) inflateView(layoutId) else mEmptyView
-        showEmpty(mEmptyView, layoutParams)
+        mEmptyView = if (mEmptyView == null) inflateView(layoutId) else mEmptyView
+        showEmpty(mEmptyView!!, layoutParams)
     }
     private fun showEmpty(view: View, layoutParams: ViewGroup.LayoutParams){
         checkNull(view, "empty view is null")
         checkNull(layoutParams, " layout params is null")
-        mOtherIds.add(mEmptyView.id)
+        mOtherIds.add(mEmptyView!!.id)
         addView(mEmptyView, 0, layoutParams)
-        showViewById(mEmptyView.id)
+        showViewById(mEmptyView!!.id)
     }
 
 
@@ -114,15 +114,15 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
         mViewStatus = STATUS_ERROR
     }
     private fun showError(layoutId: Int, layoutParams: ViewGroup.LayoutParams){
-        mErrorView = if (!this::mErrorView.isInitialized) inflateView(layoutId) else mErrorView
-        showError(mErrorView, layoutParams)
+        mErrorView = if (mErrorView == null) inflateView(layoutId) else mErrorView
+        showError(mErrorView!!, layoutParams)
     }
     private fun showError(view: View, layoutParams: ViewGroup.LayoutParams){
         checkNull(view, "error view is null")
         checkNull(layoutParams, "layout params is null")
-        mOtherIds.add(mErrorView.id)
+        mOtherIds.add(mErrorView!!.id)
         addView(mErrorView, 0, layoutParams)
-        showViewById(mEmptyView.id)
+        showViewById(mEmptyView!!.id)
     }
 
 
@@ -134,16 +134,16 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
     }
     private fun showLoading(layoutId: Int, layoutParams: ViewGroup.LayoutParams){
-        mLoadingView = if (!this::mLoadingView.isInitialized) inflateView(layoutId) else mLoadingView
-        showLoading(mLoadingView, layoutParams)
+        mLoadingView = if (mLoadingView == null) inflateView(layoutId) else mLoadingView
+        showLoading(mLoadingView!!, layoutParams)
     }
     private fun showLoading(view: View, layoutParams: ViewGroup.LayoutParams){
         checkNull(view, "loading view is null")
         checkNull(layoutParams, "layout params is null")
-        mOtherIds.add(mLoadingView.id)
+        mOtherIds.add(mLoadingView!!.id)
         addView(mLoadingView, 0, layoutParams)
 
-        showViewById(mLoadingView.id)
+        showViewById(mLoadingView!!.id)
     }
 
 
@@ -155,15 +155,15 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
     }
     private fun showNoNetwork(layoutId: Int, layoutParams: ViewGroup.LayoutParams){
-        mNoNetworkView = if (!this::mNoNetworkView.isInitialized) inflateView(layoutId) else mNoNetworkView
-        showNoNetwork(mNoNetworkView, layoutParams)
+        mNoNetworkView = if (mNoNetworkView == null) inflateView(layoutId) else mNoNetworkView
+        showNoNetwork(mNoNetworkView!!, layoutParams)
     }
     private fun showNoNetwork(view: View, layoutParams: ViewGroup.LayoutParams){
         checkNull(view, "loading view is null")
         checkNull(layoutParams, "layout params is null")
-        mOtherIds.add(mNoNetworkView.id)
+        mOtherIds.add(mNoNetworkView!!.id)
         addView(mNoNetworkView, 0, layoutParams)
-        showViewById(mNoNetworkView.id)
+        showViewById(mNoNetworkView!!.id)
     }
 
 
@@ -177,7 +177,7 @@ class MultipleStatusView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
     private fun clear(vararg views: View?){
         for (view in views) {
-            if (view != null){
+            if (view != null ){
                 removeView(view)
             }
         }

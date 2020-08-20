@@ -4,6 +4,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="network_unavailable_tip">Network connection is not available! Please check the network setting!</string>
+
     <string name="go_login">Login</string>
     <string name="nav_grade">Grade:</string>
     <string name="nav_rank">Rank:</string>
@@ -22,4 +23,28 @@
     <string name="wechat">WeChar</string>
     <string name="knowledge_system">System</string>
     <string name="project">Project</string>
+
+    <string name="navigation">Navigation</string>
+
+    <!--    home-->
+    <string name="top_tip">Top</string>
+    <string name="article_fresh">New</string>
+
+    <!--    menu Action-->
+    <string name="action_search">Search</string>
+    <string name="action_add">Add</string>
+
+    <!--    login activity-->
+    <string name="user_login">User Login</string>
+    <string name="user_tip">Please login using your WanAndroid account！</string>
+    <string name="hint_login_user">UserName</string>
+    <string name="hint_login_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="no_account">No account yet? Create one</string>
+    <string name="login_success">Login success</string>
+    <string name="login_fail">Login failed</string>
+    <string name="username_not_empty">Username cannot be empty.</string>
+    <string name="password_not_empty">Password cannot be empty.</string>
+
+    <string name="logout_success">Logout success</string>
 </resources>
