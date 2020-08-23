@@ -44,6 +44,7 @@ class LoginActivity: BaseMvpActivity<LoginContract.View, LoginContract.Presenter
         }
 
         btnLogin.setOnClickListener(clickListener)
+        btnToRegister.setOnClickListener(clickListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,6 +74,9 @@ class LoginActivity: BaseMvpActivity<LoginContract.View, LoginContract.Presenter
         when(it.id){
             R.id.btnLogin->{
                 login()
+            }
+            R.id.btnToRegister->{
+                "注册".shortToast()
             }
         }
     }
