@@ -1,5 +1,6 @@
 package com.lh.wanandroid.ui.activity
 
+import android.content.res.ColorStateList
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -59,6 +61,12 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     private var mIndex = FRAGMENT_HOME
 
     override fun attachLayoutRes() = R.layout.activity_main
+
+    override fun initColor() {
+        super.initColor()
+        floating_action_btn.backgroundColor = mThemeColor
+        floating_action_btn.backgroundTintList = ColorStateList.valueOf(mThemeColor)
+    }
 
     override fun initData() {
     }
@@ -103,6 +111,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     override fun showUserInfo(userInfo: UserInfoBody) {
         tvUserRank.text = userInfo.rank.toString()
         tvUserGrade.text = (userInfo.coinCount/100+1).toString()
+
     }
 
     private fun initBottomNavigation(){
@@ -303,6 +312,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 logout()
             }
 
+            //切换黑白主题
             R.id.navNightMode ->{
                 if (SettingUtil.getNightModeStatus()){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -37,7 +37,7 @@ abstract class BaseActivity: AppCompatActivity() {
     /** token **/
     protected var mToken by Preference(Constant.TOKEN_KEY, "")
     /** 主题色 **/
-    private var mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
+    protected var mThemeColor: Int =  App.context.resources.getColor(R.color.colorPrimary)
     protected var hasNetwork: Boolean by Preference(Constant.HAS_NETWORK_KEY, true)
 
     /** 提示View **/
