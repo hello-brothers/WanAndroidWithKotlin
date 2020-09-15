@@ -36,7 +36,7 @@ object HttpConstant {
                     it.isEmpty()
                 }.toTypedArray()
             }
-                .forEach{
+                .forEach{ it ->
                     it.filterNot {
                         contains(it)
                     }.forEach {

@@ -19,6 +19,12 @@ class SplashActivity : BaseActivity() {
     override fun enableNetworkTip() = false
 
     override fun initData() {
+
+    }
+
+    override fun initColor() {
+        super.initColor()
+        layout_splash.setBackgroundColor(mThemeColor)
     }
 
     override fun initView() {

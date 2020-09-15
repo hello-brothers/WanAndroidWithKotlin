@@ -26,6 +26,9 @@ object SettingUtil {
         }
     }
 
+    /** 获取是否开启自动切换夜间模式 **/
+    fun getIsAutoNightMode() = setting.getBoolean("auto_nightMode", false)
+
     /** 获取主题色 **/
     fun getColor(): Int{
         val defaultColor = App.context.resources.getColor(R.color.colorPrimary)
