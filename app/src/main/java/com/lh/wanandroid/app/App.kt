@@ -5,6 +5,13 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import com.lh.wanandroid.utils.CommonUtil
+import com.lh.wanandroid.utils.DayNightModeUtil
+import com.lh.wanandroid.utils.SettingUtil
+import org.jetbrains.anko.appcompat.v7.Appcompat
 import kotlin.properties.Delegates
 
 /**
@@ -27,6 +34,8 @@ class App: Application(){
         context = applicationContext
 
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
+
+        initTheme()
     }
 
     private val mActivityLifecycleCallbacks = object : ActivityLifecycleCallbacks{
@@ -54,5 +63,14 @@ class App: Application(){
         override fun onActivityResumed(activity: Activity) {
         }
 
+    }
+
+    /** theme **/
+    private fun initTheme() {
+        if (SettingUtil.getIsAutoNightMode()){
+
+        }else{
+            DayNightModeUtil.applyDayNightMode()
+        }
     }
 }

@@ -1,13 +1,14 @@
 package com.lh.wanandroid.ui.activity
 
 import android.content.res.ColorStateList
+import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -22,6 +23,7 @@ import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.model.bean.UserInfoBody
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
+import com.lh.wanandroid.utils.DayNightModeUtil
 import com.lh.wanandroid.utils.Preference
 import com.lh.wanandroid.utils.SettingUtil
 import com.lh.wanandroid.utils.cStartActivity
@@ -51,14 +53,25 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
     private var mSystemFragment: SystemFragment?        = null
     private var mWechatFragment: WechatFragment?        = null
 
-
     private lateinit var tvUserName: TextView
-
     private lateinit var tvUserRank: TextView
     private lateinit var tvUserGrade: TextView
+    //侧边栏我的积分
+    private lateinit var navScore: TextView
 
     /** 当前界面显示fragment位置索引 **/
     private var mIndex = FRAGMENT_HOME
+
+    private val BOTTOMINDEX = "bottomIndex"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mIndex = savedInstanceState?.getInt(BOTTOMINDEX)?:mIndex
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(BOTTOMINDEX, mIndex)
+    }
 
     override fun attachLayoutRes() = R.layout.activity_main
 
@@ -112,6 +125,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         tvUserRank.text = userInfo.rank.toString()
         tvUserGrade.text = (userInfo.coinCount/100+1).toString()
 
+        navScore.text = userInfo.coinCount.toString()
     }
 
     private fun initBottomNavigation(){
@@ -124,6 +138,10 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 tvUserName = findViewById(R.id.userName)
                 tvUserGrade = findViewById(R.id.tvUserGrade)
                 tvUserRank = findViewById(R.id.tvUserRank)
+
+                navScore = (navigationView.menu.findItem(R.id.navScore).actionView as TextView).apply {
+                    gravity = Gravity.CENTER_VERTICAL
+                }
 
                 findViewById<ImageView>(R.id.ivRank).setOnClickListener(leftNavigationHeadClickListener)
                 findViewById<TextView>(R.id.userName).setOnClickListener(leftNavigationHeadClickListener)
@@ -314,15 +332,10 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
 
             //切换黑白主题
             R.id.navNightMode ->{
-                if (SettingUtil.getNightModeStatus()){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    SettingUtil.setNightModeStatus(false)
-                }else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    SettingUtil.setNightModeStatus(true)
-                }
+                DayNightModeUtil.setNightModeEnable(!SettingUtil.getNightModeStatus())
 
                 window.setWindowAnimations(R.style.WindowAnimationFadeInAndOut)
+                recreate()
             }
 
         }
