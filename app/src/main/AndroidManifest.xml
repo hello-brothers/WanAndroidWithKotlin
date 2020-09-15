@@ -42,6 +42,7 @@
         </activity>
 
         <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.setting.SettingActivity"/>
     </application>
 
 </manifest>

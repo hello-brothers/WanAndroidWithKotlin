@@ -6,9 +6,12 @@ import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import com.lh.wanandroid.R
 import com.lh.wanandroid.app.App
 import com.lh.wanandroid.constant.Constant
@@ -17,6 +20,7 @@ import com.lh.wanandroid.receiver.NetworkChangeReceiver
 import com.lh.wanandroid.utils.Preference
 import com.lh.wanandroid.utils.SettingUtil
 import com.lh.wanandroid.utils.StatusBarUtil
+import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -123,6 +127,8 @@ abstract class BaseActivity: AppCompatActivity() {
         }
         StatusBarUtil.setColor(this, mThemeColor, 0)
     }
+
+
     /** 初始化TipView **/
     private fun initTipView(){
         mTipView = layoutInflater.inflate(R.layout.layout_network_tip, null)
@@ -140,6 +146,15 @@ abstract class BaseActivity: AppCompatActivity() {
         mLayoutParams.windowAnimations = R.style.anim_float_view
     }
 
+    //设置toolbar
+    protected fun initToolbar(toolbar: Toolbar, initTitle: String, showHomeAsUp: Boolean){
+        toolbar?.run {
+            //TODO 设置标题必须要在setSupportActionBar()方法之前才有效
+            title = initTitle
+            setSupportActionBar(this)
+            supportActionBar?.setDisplayHomeAsUpEnabled(showHomeAsUp)
+        }
+    }
     /** EventBus监听网络变化时间 **/
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNetWorkChangeEvent(event: NetworkChangeEvent){
@@ -160,5 +175,25 @@ abstract class BaseActivity: AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            /** 设置toolbar的返回按钮，点击出栈 **/
+            android.R.id.home ->{
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        //fragment逐个出栈
+        val count = supportFragmentManager.backStackEntryCount
+        if (count == 0)
+            super.onBackPressed()
+        else
+            supportFragmentManager.popBackStack()
     }
 }

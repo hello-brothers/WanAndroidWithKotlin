@@ -23,6 +23,7 @@ import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
 import com.lh.wanandroid.mvp.model.bean.UserInfoBody
 import com.lh.wanandroid.mvp.presenter.MainPresenter
 import com.lh.wanandroid.ui.fragment.*
+import com.lh.wanandroid.ui.setting.SettingActivity
 import com.lh.wanandroid.utils.DayNightModeUtil
 import com.lh.wanandroid.utils.Preference
 import com.lh.wanandroid.utils.SettingUtil
@@ -330,6 +331,9 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
                 logout()
             }
 
+            R.id.navSetting ->{
+                cStartActivity<SettingActivity>(this)
+            }
             //切换黑白主题
             R.id.navNightMode ->{
                 DayNightModeUtil.setNightModeEnable(!SettingUtil.getNightModeStatus())

@@ -47,4 +47,11 @@
     <string name="password_not_empty">Password cannot be empty.</string>
 
     <string name="logout_success">Logout success</string>
+
+    <!--    setting-->
+    <string name="setting">设置</string>
+    <string name="basic_setting">基础设置</string>
+    <string name="switch_photo_mode_title">Without Image Mode</string>
+    <string name="switch_photo_mode_summary">Unload pictures in non Wifi environment after opening</string>
+
 </resources>
