@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <PreferenceCategory android:title="@string/basic_setting">
+    >
+
+    <PreferenceCategory
+        android:title="@string/basic_setting">
 
         <CheckBoxPreference
             android:title="@string/switch_photo_mode_title"
             android:summary="@string/switch_photo_mode_summary"
-            android:key="voice"
+            android:key="switchOfPhotoMode"
             android:defaultValue="false"
+            />
+
+        <CheckBoxPreference
+            android:title="@string/switch_show_top_article_title"
+            android:summary="@string/switch_show_top_article_summary"
+            android:key="switchOfTopArticle"
+            android:defaultValue="false"
+            />
+
+        <Preference
+            android:title="@string/auto_night_mode"
+            android:summary="@string/auto_night_mode_summary"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/other_setting">
+
+        <CheckBoxPreference
+            android:title="@string/nav_bar_coloration"
+            android:summary="@string/nav_bar_coloration_summary"
+            android:defaultValue="false"
+            />
+
+        <Preference
+            android:title="@string/clear_cache"
+            />
+
+        <Preference
+            android:title="@string/scan_code_download"
+            android:summary="@string/scan_share_tip"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/about_settings">
+
+        <Preference
+            android:title="@string/version"
+            android:summary="@string/current_version"
+            />
+
+        <Preference
+            android:title="@string/official_website"
+            android:summary="@string/official_website_url"
             />
     </PreferenceCategory>
 </PreferenceScreen>
