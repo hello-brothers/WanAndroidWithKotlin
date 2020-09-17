@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.lh.multiple.MultipleStatusView
+import com.lh.wanandroid.R
+import com.lh.wanandroid.app.App
 import com.lh.wanandroid.event.NetworkChangeEvent
+import com.lh.wanandroid.utils.SettingUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -27,6 +31,8 @@ abstract class BaseFragment: Fragment() {
     protected var mLayoutStatusView: MultipleStatusView? = null
 
 
+    /** 主题色 **/
+    protected var mThemeColor = App.context.resources.getColor(R.color.colorPrimary)
 
     /** 加载布局 **/
     abstract fun attachLayoutRes(): Int
@@ -76,11 +82,24 @@ abstract class BaseFragment: Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        initColor()
+    }
 
     private fun lazyLoadDataIfPrepared() {
         if (userVisibleHint && isViewPrepare && !hasLoadData){
             lazyLoad()
             hasLoadData = true
+        }
+    }
+
+    //调整颜色
+    open fun initColor(){
+        mThemeColor = if (SettingUtil.getNightModeStatus()){
+            resources.getColor(R.color.colorPrimary)
+        }else{
+            SettingUtil.getColor()
         }
     }
 

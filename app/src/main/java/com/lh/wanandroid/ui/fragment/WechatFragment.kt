@@ -71,6 +71,10 @@ class WechatFragment: BaseMvpFragment<WechatContract.View, WechatContract.Presen
             mLayoutStatusView?.showContent()
     }
 
+    override fun initColor() {
+        super.initColor()
+        tabLayout.setBackgroundColor(mThemeColor)
+    }
     override fun scrollToTop() {
         pagerAdapter.getItem(viewPager.currentItem).run {
             if (this is KnowledgeFragment){

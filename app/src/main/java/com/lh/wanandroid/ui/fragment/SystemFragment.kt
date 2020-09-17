@@ -62,6 +62,11 @@ class SystemFragment: BaseMvpFragment<SystemContract.View, SystemContract.Presen
 
     }
 
+    override fun initColor() {
+        super.initColor()
+        tabLayout.setBackgroundColor(mThemeColor)
+    }
+
     override fun scrollToTop() {
         pagerAdapter.getItem(viewPager.currentItem).apply {
             if (this is SystemTreeFragment )

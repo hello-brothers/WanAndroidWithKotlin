@@ -28,6 +28,13 @@
 
     <PreferenceCategory android:title="@string/other_setting">
 
+        <com.lh.wanandroid.widget.IconPreference
+            android:key="keyOfThemeColor"
+            android:title="@string/choose_theme_color"
+            android:summary="@string/choose_theme_color_summary"
+            />
+
+
         <CheckBoxPreference
             android:title="@string/nav_bar_coloration"
             android:summary="@string/nav_bar_coloration_summary"
@@ -49,6 +56,7 @@
         android:title="@string/about_settings">
 
         <Preference
+            android:key="version"
             android:title="@string/version"
             android:summary="@string/current_version"
             />

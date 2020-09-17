@@ -6,9 +6,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.use
 import com.lh.wanandroid.R
+import org.jetbrains.anko.backgroundColor
 import kotlin.math.min
 
 /**
@@ -33,6 +35,12 @@ class CircleImageView(context: Context, attrs: AttributeSet?) :
     private var mRawBitmap: Bitmap? = null
     private var mShader: BitmapShader? = null
     private val mMatrix = Matrix()
+
+    private var bkgroundColor : Int? = null
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     companion object{
 
@@ -124,7 +132,7 @@ class CircleImageView(context: Context, attrs: AttributeSet?) :
                 val bounds = drawable.bounds
                 val width = bounds.right - bounds.left
                 val height = bounds.bottom - bounds.top
-                val color = drawable.color
+                val color = bkgroundColor?: drawable.color
                 val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bitmap)
                 canvas.drawARGB(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color))
@@ -132,6 +140,10 @@ class CircleImageView(context: Context, attrs: AttributeSet?) :
             }
             else -> null
         }
+    }
+
+    fun setBkColor(@ColorInt color:  Int){
+        bkgroundColor = color
     }
 
 }

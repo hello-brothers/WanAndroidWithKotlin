@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.PixelFormat
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -126,6 +127,8 @@ abstract class BaseActivity: AppCompatActivity() {
             SettingUtil.getColor()
         }
         StatusBarUtil.setColor(this, mThemeColor, 0)
+
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
     }
 
 

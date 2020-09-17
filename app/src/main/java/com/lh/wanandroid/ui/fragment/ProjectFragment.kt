@@ -65,6 +65,10 @@ class ProjectFragment: BaseMvpFragment<ProjectContract.View, ProjectContract.Pre
             mLayoutStatusView?.showContent()
     }
 
+    override fun initColor() {
+        super.initColor()
+        tabLayout.setBackgroundColor(mThemeColor)
+    }
     override fun scrollToTop() {
         pageAdapter.getItem(viewpager.currentItem).apply {
             this as ProjectListFragment

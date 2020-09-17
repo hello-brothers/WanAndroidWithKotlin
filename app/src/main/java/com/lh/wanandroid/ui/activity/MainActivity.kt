@@ -80,6 +80,7 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         super.initColor()
         floating_action_btn.backgroundColor = mThemeColor
         floating_action_btn.backgroundTintList = ColorStateList.valueOf(mThemeColor)
+        navigationView.getHeaderView(0).setBackgroundColor(mThemeColor)
     }
 
     override fun initData() {
