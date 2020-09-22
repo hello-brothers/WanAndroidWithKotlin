@@ -54,7 +54,7 @@
     <string name="switch_photo_mode_title">Without Image Mode</string>
     <string name="switch_photo_mode_summary">Unload pictures in non Wifi environment after opening</string>
     <string name="switch_show_top_article_title">show the top of the home page article</string>
-    <string name="switch_show_top_article_summary">When opened, the top page article will not be displayed</string>
+    <string name="switch_show_top_article_summary">When opened, the top page article will be displayed</string>
     <string name="auto_night_mode">Auto Switch Night Mode</string>
     <string name="auto_night_mode_summary">Setting the time to switch</string>
     <string name="other_setting">Other Setting</string>

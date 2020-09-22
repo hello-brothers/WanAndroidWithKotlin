@@ -46,4 +46,7 @@ object SettingUtil {
             putInt("color", color)
         }
     }
+
+    /** 首页是否显示top文章 **/
+    fun getIsShowTopArticle() = setting.getBoolean("switchOfTopArticle", false);
 }

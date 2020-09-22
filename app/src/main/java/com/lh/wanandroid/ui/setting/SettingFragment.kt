@@ -2,12 +2,18 @@ package com.lh.wanandroid.ui.setting
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.color.ColorChooserDialog
 import com.lh.wanandroid.R
+import com.lh.wanandroid.event.RefreshEvent
 import com.lh.wanandroid.ext.shortToast
+import com.lh.wanandroid.rx.SchedulerUtils
 import com.lh.wanandroid.ui.BasePreferenceFragment
 import com.lh.wanandroid.widget.IconPreference
+import io.reactivex.Observable
+import org.greenrobot.eventbus.EventBus
+import java.util.concurrent.TimeUnit
 
 /**
  * Author: lh
@@ -52,6 +58,20 @@ class SettingFragment private constructor(private val mActivity: SettingActivity
         findPreference<Preference>("version")?.setOnPreferenceClickListener {
             "check version".shortToast()
             false
+        }
+
+        findPreference<CheckBoxPreference>("switchOfTopArticle")?.setOnPreferenceChangeListener { preference, newValue ->
+            Observable.timer(100, TimeUnit.MILLISECONDS)
+                .compose(SchedulerUtils.ioToMain())
+                .subscribe {
+                    EventBus.getDefault().post(RefreshEvent(true))
+                }
+            true
+        }
+
+        findPreference<Preference>("auto_nightMode")?.setOnPreferenceClickListener {
+            mActivity.startWithFragment(AutoNightModeFragment::class.java.name)
+            true
         }
     }
 

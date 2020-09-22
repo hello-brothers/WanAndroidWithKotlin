@@ -17,6 +17,7 @@ import com.lh.wanandroid.base.BaseFragment
 import com.lh.wanandroid.base.BaseMvpActivity
 import com.lh.wanandroid.base.mvp.IView
 import com.lh.wanandroid.event.LoginEvent
+import com.lh.wanandroid.event.RefreshEvent
 import com.lh.wanandroid.ext.shortToast
 import com.lh.wanandroid.mvp.contract.MainContract
 import com.lh.wanandroid.mvp.contract.fcinterface.IScrollToTop
@@ -379,6 +380,12 @@ class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(
         getCurrentViewByIndex(mIndex)?.autoRefresh()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshEvent(event: RefreshEvent){
+        if (event.isRefresh){
+            getCurrentViewByIndex(mIndex)?.autoRefresh()
+        }
+    }
 
 }
 

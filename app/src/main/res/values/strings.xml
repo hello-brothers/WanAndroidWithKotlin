@@ -55,7 +55,7 @@
     <string name="switch_photo_mode_title">无图模式</string>
     <string name="switch_photo_mode_summary">开启后在非Wifi环境下不加载图片</string>
     <string name="switch_show_top_article_title">是否开启首页顶置文章</string>
-    <string name="switch_show_top_article_summary">开启后将不在显示首页顶置文章</string>
+    <string name="switch_show_top_article_summary">开启后将显示首页顶置文章</string>
     <string name="auto_night_mode">自动切换夜间模式</string>
     <string name="auto_night_mode_summary">设置切换的时间</string>
 

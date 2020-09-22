@@ -21,6 +21,7 @@
             />
 
         <Preference
+            android:key="auto_nightMode"
             android:title="@string/auto_night_mode"
             android:summary="@string/auto_night_mode_summary"
             />

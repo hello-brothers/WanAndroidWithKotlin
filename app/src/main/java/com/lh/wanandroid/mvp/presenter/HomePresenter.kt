@@ -7,6 +7,7 @@ import com.lh.wanandroid.mvp.model.HomeModel
 import com.lh.wanandroid.mvp.model.bean.Article
 import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
 import com.lh.wanandroid.mvp.model.bean.HttpResult
+import com.lh.wanandroid.utils.SettingUtil
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 
@@ -55,8 +56,5 @@ class HomePresenter: BasePresenter<HomeContract.Model, HomeContract.View>(), Hom
         }
     }
 
-    private fun isShowTopArticle(): Boolean{
-
-        return true
-    }
+    private fun isShowTopArticle() = SettingUtil.getIsShowTopArticle()
 }
