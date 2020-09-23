@@ -49,4 +49,30 @@ object SettingUtil {
 
     /** 首页是否显示top文章 **/
     fun getIsShowTopArticle() = setting.getBoolean("switchOfTopArticle", false);
+
+    /** autoNightModel`s start hours of dayModel**/
+    fun getHoursOfDayModel()= setting.getString("startHoursOfDayModel", "06")
+
+    fun getMinuteOfDayModel() = setting.getString("startMinuteOfDayModel", "00")
+
+    fun getHoursOfNightModel() = setting.getString("startHoursOfNightModel", "22")
+
+    fun getMinuteOfNightModel() = setting.getString("startMinuteOfNightModel", "00")
+
+
+    fun setHoursOfDayModel(data: String) = setting.edit {
+        putString("startHoursOfDayModel", data)
+    }
+
+    fun setMinuteOfDayModel(data: String) = setting.edit {
+        putString("startMinuteOfDayModel", data)
+    }
+
+    fun setHoursOfNightModel(data: String) = setting.edit {
+        putString("startHoursOfNightModel", data)
+    }
+
+    fun setMinuteOfNightModel(data: String) = setting.edit {
+        putString("startMinuteOfNightModel", data)
+    }
 }

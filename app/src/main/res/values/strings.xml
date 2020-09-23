@@ -78,5 +78,9 @@
     <string name="cancel">取消</string>
     <string name="done">完成</string>
     <string name="custom">自定义</string>
+    <string name="auto_night_mode_subsummary">重启App生效</string>
+    <string name="auto_night_category">时间</string>
+    <string name="night_mode_start">夜间模式开始时间</string>
+    <string name="auto_day_mode">日间模式开始时间</string>
 
 </resources>
