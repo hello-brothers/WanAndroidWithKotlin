@@ -7,6 +7,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.lh.wanandroid.R
+import com.lh.wanandroid.app.App
 
 /**
  *@author: lh
@@ -14,10 +15,13 @@ import com.lh.wanandroid.R
  */
 object ImageLoader {
 
-    private var isLoadImage: Boolean = true
+    private var isNotLoadImageWithoutWifi: Boolean = false
+        get() {
+            return SettingUtil.getIsNotLoadImageWithoutWifi() && NetWorkUtil.isWifi(App.context)
+        }
     fun load(context: Context, url: String?, iv: ImageView?){
 
-        if (isLoadImage){
+        if (!isNotLoadImageWithoutWifi){
             iv?.apply {
                 Glide.with(context!!).clear(iv)
                 val options = RequestOptions

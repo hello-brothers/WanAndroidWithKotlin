@@ -38,6 +38,11 @@ class SettingFragment private constructor(private val mActivity: SettingActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        findPreference<CheckBoxPreference>("switchOfAutoNightMode")?.setOnPreferenceChangeListener { _, _ ->
+            postRefreshEvent()
+            true
+        }
+
         //设置主题颜色
         keyOfThemeColor = findPreference<IconPreference>("keyOfThemeColor") as IconPreference
         findPreference<IconPreference>("keyOfThemeColor")?.setOnPreferenceClickListener {
@@ -61,11 +66,7 @@ class SettingFragment private constructor(private val mActivity: SettingActivity
         }
 
         findPreference<CheckBoxPreference>("switchOfTopArticle")?.setOnPreferenceChangeListener { preference, newValue ->
-            Observable.timer(100, TimeUnit.MILLISECONDS)
-                .compose(SchedulerUtils.ioToMain())
-                .subscribe {
-                    EventBus.getDefault().post(RefreshEvent(true))
-                }
+            postRefreshEvent()
             true
         }
 
@@ -73,6 +74,14 @@ class SettingFragment private constructor(private val mActivity: SettingActivity
             mActivity.startWithFragment(AutoNightModeFragment::class.java.name)
             true
         }
+    }
+
+    private fun postRefreshEvent() {
+        Observable.timer(100, TimeUnit.MILLISECONDS)
+            .compose(SchedulerUtils.ioToMain())
+            .subscribe {
+                EventBus.getDefault().post(RefreshEvent(true))
+            }
     }
 
     override fun onResume() {

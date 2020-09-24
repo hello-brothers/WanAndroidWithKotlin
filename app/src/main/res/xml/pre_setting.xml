@@ -9,7 +9,7 @@
         <CheckBoxPreference
             android:title="@string/switch_photo_mode_title"
             android:summary="@string/switch_photo_mode_summary"
-            android:key="switchOfPhotoMode"
+            android:key="switchOfImageMode"
             android:defaultValue="false"
             />
 

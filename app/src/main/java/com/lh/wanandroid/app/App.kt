@@ -12,6 +12,7 @@ import com.lh.wanandroid.utils.CommonUtil
 import com.lh.wanandroid.utils.DayNightModeUtil
 import com.lh.wanandroid.utils.SettingUtil
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -69,6 +70,24 @@ class App: Application(){
     private fun initTheme() {
         if (SettingUtil.getIsAutoNightMode()){
 
+            val calendar = Calendar.getInstance()
+            val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = calendar.get(Calendar.MINUTE)
+            val currentTime = currentHour*60 + currentMinute
+
+            val hoursOfDayModel = SettingUtil.getHoursOfDayModel().toInt()
+            val minuteOfDayModel = SettingUtil.getMinuteOfDayModel().toInt()
+            val timeOfDayModel = hoursOfDayModel * 60 + minuteOfDayModel
+
+            val hoursOfNightModel = SettingUtil.getHoursOfNightModel().toInt()
+            val minuteOfNightModel = SettingUtil.getMinuteOfNightModel().toInt()
+            val timeOfNightModel = hoursOfNightModel*60 + minuteOfNightModel
+
+            if (currentTime < timeOfDayModel || currentTime >= timeOfNightModel){
+                DayNightModeUtil.setNightModeEnable(true)
+            }else{
+                DayNightModeUtil.setNightModeEnable(false)
+            }
         }else{
             DayNightModeUtil.applyDayNightMode()
         }

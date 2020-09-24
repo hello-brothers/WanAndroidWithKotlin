@@ -26,5 +26,28 @@ fun isNetworkConnected(context: Context): Boolean{
         val info = manager.activeNetworkInfo;
         (info != null && info.isAvailable)
     }
+}
 
+class NetWorkUtil{
+
+    companion object{
+        fun isWifi(context: Context): Boolean {
+            val manager =
+                context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                val network = manager.activeNetwork
+
+
+                network?.let {
+                     manager.getNetworkCapabilities(it).hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                }?: false
+
+
+            }else{
+                val info = manager.activeNetworkInfo
+                (info != null && info.type == ConnectivityManager.TYPE_WIFI)
+            }
+        }
+    }
 }

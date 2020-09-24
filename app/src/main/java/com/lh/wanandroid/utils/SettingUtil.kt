@@ -27,7 +27,10 @@ object SettingUtil {
     }
 
     /** 获取是否开启自动切换夜间模式 **/
-    fun getIsAutoNightMode() = setting.getBoolean("auto_nightMode", false)
+    fun getIsAutoNightMode() = setting.getBoolean("switchOfAutoNightMode", false)
+
+    /** 获取是否开启无图模式 默认是加载的**/
+    fun getIsNotLoadImageWithoutWifi() = setting.getBoolean("switchOfImageMode", false)
 
     /** 获取主题色 **/
     fun getColor(): Int{
@@ -51,13 +54,14 @@ object SettingUtil {
     fun getIsShowTopArticle() = setting.getBoolean("switchOfTopArticle", false);
 
     /** autoNightModel`s start hours of dayModel**/
-    fun getHoursOfDayModel()= setting.getString("startHoursOfDayModel", "06")
+    fun getHoursOfDayModel() = setting.getString("startHoursOfDayModel", "06").toString()
 
-    fun getMinuteOfDayModel() = setting.getString("startMinuteOfDayModel", "00")
+    fun getMinuteOfDayModel() = setting.getString("startMinuteOfDayModel", "00").toString()
 
-    fun getHoursOfNightModel() = setting.getString("startHoursOfNightModel", "22")
+    /** autoNightModel`s start hours of nightModel**/
+    fun getHoursOfNightModel() = setting.getString("startHoursOfNightModel", "22").toString()
 
-    fun getMinuteOfNightModel() = setting.getString("startMinuteOfNightModel", "00")
+    fun getMinuteOfNightModel() = setting.getString("startMinuteOfNightModel", "00").toString()
 
 
     fun setHoursOfDayModel(data: String) = setting.edit {
@@ -75,4 +79,6 @@ object SettingUtil {
     fun setMinuteOfNightModel(data: String) = setting.edit {
         putString("startMinuteOfNightModel", data)
     }
+
+
 }
