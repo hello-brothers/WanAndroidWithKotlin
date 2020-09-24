@@ -17,23 +17,25 @@ object ImageLoader {
 
     private var isNotLoadImageWithoutWifi: Boolean = false
         get() {
-            return SettingUtil.getIsNotLoadImageWithoutWifi() && NetWorkUtil.isWifi(App.context)
+
+            return SettingUtil.getIsNotLoadImageWithoutWifi()
         }
     fun load(context: Context, url: String?, iv: ImageView?){
 
-        if (!isNotLoadImageWithoutWifi){
-            iv?.apply {
-                Glide.with(context!!).clear(iv)
-                val options = RequestOptions
-                    .diskCacheStrategyOf(DiskCacheStrategy.DATA)//解码前将数据写入磁盘缓存
-                    .placeholder(R.drawable.bg_placeholder)//占位符
+        if (isNotLoadImageWithoutWifi && !NetWorkUtil.isWifi(App.context)){
+            return
+        }
+        iv?.apply {
+            Glide.with(context!!).clear(iv)
+            val options = RequestOptions
+                .diskCacheStrategyOf(DiskCacheStrategy.DATA)//解码前将数据写入磁盘缓存
+                .placeholder(R.drawable.bg_placeholder)//占位符
 
-                Glide.with(context!!)
-                    .load(url)
-                    .transition(DrawableTransitionOptions().crossFade())
-                    .apply(options)
-                    .into(iv)
-            }
+            Glide.with(context!!)
+                .load(url)
+                .transition(DrawableTransitionOptions().crossFade())
+                .apply(options)
+                .into(iv)
         }
 
     }
