@@ -51,8 +51,6 @@ abstract class BaseFragment: Fragment() {
         lazyLoad()
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

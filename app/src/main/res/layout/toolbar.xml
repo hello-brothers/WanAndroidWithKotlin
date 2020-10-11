@@ -14,5 +14,18 @@
         android:layout_height="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        />
+        >
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/White"
+            android:singleLine="true"
+            android:visibility="gone"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

@@ -45,7 +45,7 @@ ext{
             "glid"                  : "com.github.bumptech.glide:glide:${dependVersion.glideVersion}",
             //颜色选择dialog等
             "material-dialogs"      : 'com.afollestad.material-dialogs:commons:0.9.4.4',
-
+            "agentweb"              : 'com.just.agentweb:agentweb:4.1.4',
 
     ]
 

@@ -18,4 +18,7 @@ object Constant {
     const val USERNAME_KEY = "username"
     const val PASSWORD_KEY = "password"
     const val TOKEN_KEY = "token"
+
+    const val CONTENT_TITLE_KEY = "content_title_key"
+    const val CONTEN_URL_KEY = "content_url_key"
 }

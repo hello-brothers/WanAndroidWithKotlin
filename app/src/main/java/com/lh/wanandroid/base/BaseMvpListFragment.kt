@@ -1,8 +1,10 @@
 package com.lh.wanandroid.base
 
 import android.view.View
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lh.wanandroid.base.mvp.IPresenter
 import com.lh.wanandroid.base.mvp.IView
@@ -54,6 +56,8 @@ abstract class BaseMvpListFragment<in V: IView, P: IPresenter<V>, B> : BaseMvpFr
                 onLoadMore()
             }
 
+        rvAdapter.setOnItemClickListener { _, view, position -> onItemClickListener(view, position)}
+
         super.initView(view)
     }
 
@@ -71,5 +75,10 @@ abstract class BaseMvpListFragment<in V: IView, P: IPresenter<V>, B> : BaseMvpFr
     override fun autoRefresh() {
         super.autoRefresh()
         onRefreshList()
+    }
+
+    /** RecyclerView item 点击事件 **/
+    open fun onItemClickListener(@NonNull view: View, position: Int){
+
     }
 }

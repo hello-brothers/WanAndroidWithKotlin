@@ -14,6 +14,7 @@ import com.lh.wanandroid.mvp.model.bean.Article
 import com.lh.wanandroid.mvp.model.bean.ArticleResponseBody
 import com.lh.wanandroid.mvp.model.bean.Banner
 import com.lh.wanandroid.mvp.presenter.HomePresenter
+import com.lh.wanandroid.ui.activity.ContentActivity
 import com.lh.wanandroid.utils.ImageLoader
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.item_home_banner.view.*
@@ -37,7 +38,7 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
 
 
     /** banner data **/
-    private lateinit var bannerDatas: ArrayList<Banner>
+    private val bannerDatas: ArrayList<Banner> = ArrayList()
 
     private val datas = mutableListOf<Article>()
 
@@ -45,7 +46,6 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
     private val bannerAdapter:BGABanner.Adapter<ImageView, String> by lazy {
         BGABanner.Adapter<ImageView, String>{banner, itemView, model, position ->
             activity?.let { ImageLoader.load(it, model, itemView) }
-
         }
     }
 
@@ -54,6 +54,7 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
         BGABanner.Delegate<ImageView, String>{banner, itemView, model, position ->
             if (bannerDatas.size > 0){
                 val data = bannerDatas[position]
+                activity?.let { ContentActivity.start(it, data.title, data.url) }
             }
         }
     }
@@ -116,6 +117,9 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
                 bannerTitleList.add(it.title)
             }
 
+        bannerDatas.clear()
+        bannerDatas.addAll(banners)
+
         bannerView.banner.run {
             setAutoPlayAble(bannerFeedList.size > 1)
             setData(bannerFeedList, bannerTitleList)
@@ -140,5 +144,9 @@ class HomeFragment: BaseMvpListFragment<HomeContract.View, HomeContract.Presente
 
     override fun generateAdapter() = HomeAdapter(datas)
 
+    override fun onItemClickListener(view: View, position: Int) {
+        val article = datas[position]
+        activity?.let { ContentActivity.start(it, article.title, article.link) }
+    }
 
 }
