@@ -59,7 +59,10 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" >
+<!--        设置menu显示于toolbar下方-->
+        <item name="overlapAnchor">false</item>
+    </style>
 
     <style name="WindowAnimationFadeInAndOut">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>

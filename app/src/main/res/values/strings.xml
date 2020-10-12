@@ -83,4 +83,8 @@
     <string name="night_mode_start">夜间模式开始时间</string>
     <string name="auto_day_mode">日间模式开始时间</string>
 
+
+    <string name="action_share">分享</string>
+    <string name="action_like">收藏</string>
+    <string name="action_browser">浏览器打开</string>
 </resources>

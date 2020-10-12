@@ -3,6 +3,7 @@ package com.lh.wanandroid.ui.activity
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
 import android.view.View
 import android.webkit.WebView
 import android.widget.LinearLayout
@@ -18,6 +19,7 @@ import com.lh.wanandroid.constant.Constant
 import com.lh.wanandroid.mvp.contract.ContentContract
 import com.lh.wanandroid.mvp.presenter.ContentPresenter
 import com.lh.wanandroid.widget.NestedScrolledAgentWebView
+import kotlinx.android.synthetic.main.activity_content.*
 import kotlinx.android.synthetic.main.container.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -84,7 +86,7 @@ class ContentActivity: BaseMvpActivity<ContentContract.View, ContentContract.Pre
         val layoutParams = CoordinatorLayout.LayoutParams(-1, -1)
         layoutParams.behavior = AppBarLayout.ScrollingViewBehavior()
         mAgentWeb = AgentWeb.with(this)
-            .setAgentWebParent(flContainer, layoutParams)
+            .setAgentWebParent(webContainer, layoutParams)
             .useDefaultIndicator()
             .setWebView(webView)
             .setWebChromeClient(mWebChromeClient)
@@ -104,5 +106,10 @@ class ContentActivity: BaseMvpActivity<ContentContract.View, ContentContract.Pre
     override fun onBackPressed() {
         if (!mAgentWeb.back())
             super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.ment_content, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
