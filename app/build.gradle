@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     //androidx
-    implementation rootProject.ext.androidxLibs
+//    implementation rootProject.ext.androidxLibs
 
     //通用库
     implementation rootProject.ext.commonLibs
@@ -63,6 +63,8 @@ dependencies {
     implementation rootProject.ext.retrofitLibs
 
     annotationProcessor rootProject.ext.annotationProcessorLibs
+
+    implementation Deps.androidxLibs
 
     implementation project(path: ':multiple-status-view')
 
